@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project_specification>
+  <project_name>Castro</project_name>
+
+  <overview>
+    Castro is a voice-to-documentation application designed specifically for psychotherapists to streamline their clinical note-taking workflow. The application monitors a designated private folder for audio recordings dictated by the therapist during or after client sessions. Using local AI models for privacy-compliant transcription and processing, Castro automatically transcribes the recordings and intelligently maps the content to the appropriate sections of clinical documentation templates (e.g., SOAP notes, DAP notes, or custom progress note formats with sections like Information, Interventions, Client Response, and Plan). The system identifies any missing required information and prompts the user to fill in gaps, ensuring complete and professionally formatted documentation ready for copy-paste into EHR systems. The local-first AI approach ensures HIPAA compliance by keeping sensitive client information on the therapist&apos;s own machine.
+  </overview>
+
+  <technology_stack>
+    <technology>TanStack Start (React-based full-stack framework)</technology>
+    <technology>React 18+</technology>
+    <technology>TypeScript</technology>
+    <technology>PostgreSQL</technology>
+    <technology>Drizzle ORM</technology>
+    <technology>shadcn/ui component library</technology>
+    <technology>Tailwind CSS</technology>
+    <technology>Whisper.cpp (local speech-to-text transcription)</technology>
+    <technology>Ollama with local LLM (llama3 or similar for note generation)</technology>
+    <technology>Node.js file system watcher (chokidar)</technology>
+    <technology>Zod (schema validation)</technology>
+    <technology>React Query (TanStack Query for data fetching)</technology>
+    <technology>Vite (build tooling via TanStack Start)</technology>
+  </technology_stack>
+
+  <core_capabilities>
+    <capability>Voice file monitoring - Watches a designated private folder for new audio recordings</capability>
+    <capability>Local speech-to-text transcription - Uses Whisper.cpp for HIPAA-compliant local transcription</capability>
+    <capability>Note template management - CRUD operations for creating and maintaining clinical documentation templates</capability>
+    <capability>Intelligent content mapping - Compares transcription against selected template structure and organizes content into appropriate sections</capability>
+    <capability>Gap analysis and prompting - Identifies missing required fields and prompts user for additional information</capability>
+    <capability>Professional note generation - Uses local LLM to transform raw dictation into professionally worded clinical documentation</capability>
+    <capability>Formatted output presentation - Displays completed documentation with proper formatting for easy copy-paste</capability>
+    <capability>Template versioning - Maintains history of template modifications</capability>
+    <capability>Session history - Stores completed notes for reference and audit purposes</capability>
+  </core_capabilities>
+
+  <implemented_features>
+    <feature>
+      <name>Project Structure</name>
+      <description>Initial project setup with TanStack Start configuration and basic file structure</description>
+    </feature>
+    <feature>
+      <name>Audio File Watcher Service</name>
+      <description>Background service that monitors a designated folder for new audio file uploads (mp3, wav, m4a formats) and triggers the transcription pipeline</description>
+    </feature>
+    <feature>
+      <name>Whisper Integration Module</name>
+      <description>Local transcription service using Whisper.cpp for converting audio recordings to text without sending data to external servers</description>
+    </feature>
+    <feature>
+      <name>Note Template Schema</name>
+      <description>Database schema and Drizzle ORM models for storing note templates with customizable sections and required fields</description>
+    </feature>
+    <feature>
+      <name>Template CRUD API</name>
+      <description>REST API endpoints for creating, reading, updating, and deleting note templates</description>
+    </feature>
+    <feature>
+      <name>Template Management UI</name>
+      <description>React components using shadcn/ui for managing note templates including a template editor with drag-and-drop section ordering</description>
+    </feature>
+    <feature>
+      <name>Transcription Processing Pipeline</name>
+      <description>Service that takes raw transcription and uses local LLM (via Ollama) to organize content into template sections</description>
+    </feature>
+    <feature>
+      <name>Gap Detection Engine</name>
+      <description>Analyzes mapped transcription against template requirements to identify missing information</description>
+    </feature>
+    <feature>
+      <name>Interactive Prompt Interface</name>
+      <description>UI component that presents users with specific questions to fill in missing documentation gaps</description>
+    </feature>
+    <feature>
+      <name>Note Preview and Export</name>
+      <description>Formatted note display with copy-to-clipboard functionality and optional export formats</description>
+    </feature>
+    <feature>
+      <name>Session Dashboard</name>
+      <description>Main interface showing recent recordings, processing status, and completed notes</description>
+    </feature>
+  </implemented_features>
+
+  <additional_requirements>
+    <requirement>Local Whisper.cpp installation for speech-to-text (brew install whisper.cpp on macOS)</requirement>
+    <requirement>Ollama installed locally with a compatible model (llama3, mistral, or similar)</requirement>
+    <requirement>PostgreSQL 14+ database server</requirement>
+    <requirement>Node.js 18+ runtime</requirement>
+    <requirement>Minimum 8GB RAM recommended for local AI processing</requirement>
+    <requirement>Audio codecs support for mp3, wav, m4a, and ogg formats</requirement>
+    <requirement>Secure local storage with appropriate file permissions for the monitored folder</requirement>
+    <requirement>HIPAA compliance considerations - all processing must remain local</requirement>
+  </additional_requirements>
+
+  <development_guidelines>
+    <guideline>All patient data processing must occur locally - never send PHI to external APIs</guideline>
+    <guideline>Use TypeScript strict mode for type safety throughout the codebase</guideline>
+    <guideline>Follow React Server Components patterns with TanStack Start for optimal performance</guideline>
+    <guideline>Implement proper error boundaries around AI processing components</guideline>
+    <guideline>Use Zod schemas for all API input validation</guideline>
+    <guideline>Write unit tests for template parsing and gap detection logic</guideline>
+    <guideline>Follow accessibility best practices (WCAG 2.1 AA) for all UI components</guideline>
+    <guideline>Use conventional commits for version control</guideline>
+    <guideline>Document all template field types and validation rules</guideline>
+    <guideline>Implement proper logging without capturing sensitive patient information</guideline>
+  </development_guidelines>
+
+  <implementation_roadmap>
+    <phase>
+      <name>Phase 1: Foundation</name>
+      <status>pending</status>
+      <description>Project scaffolding with TanStack Start, database schema design, and basic UI shell with authentication</description>
+    </phase>
+    <phase>
+      <name>Phase 2: Template System</name>
+      <status>pending</status>
+      <description>Implement note template CRUD operations, template editor UI, and default clinical note templates (SOAP, DAP, BIRP)</description>
+    </phase>
+    <phase>
+      <name>Phase 3: Audio Pipeline</name>
+      <status>pending</status>
+      <description>Set up folder monitoring service, integrate Whisper.cpp for local transcription, and build transcription queue management</description>
+    </phase>
+    <phase>
+      <name>Phase 4: AI Processing</name>
+      <status>pending</status>
+      <description>Integrate Ollama for local LLM, implement content-to-template mapping, and build gap detection engine</description>
+    </phase>
+    <phase>
+      <name>Phase 5: User Interface</name>
+      <status>pending</status>
+      <description>Build interactive prompt interface for missing fields, note preview/edit screen, and copy-to-clipboard functionality</description>
+    </phase>
+    <phase>
+      <name>Phase 6: Polish and Testing</name>
+      <status>pending</status>
+      <description>End-to-end testing, performance optimization for AI processing, and UI/UX refinements based on user feedback</description>
+    </phase>
+  </implementation_roadmap>
+</project_specification>

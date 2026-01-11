@@ -1,0 +1,16 @@
+{
+  "id": "note-generation-service",
+  "category": "Core",
+  "title": "Professional Note Generation",
+  "description": "Service that uses local LLM to transform raw dictation and filled gaps into professionally worded clinical documentation. Applies clinical writing standards and maintains appropriate tone.",
+  "status": "verified",
+  "priority": 1,
+  "complexity": "complex",
+  "dependencies": [
+    "content-mapping-engine",
+    "gap-prompt-ui"
+  ],
+  "createdAt": "2026-01-10T13:42:09.205Z",
+  "updatedAt": "2026-01-11T05:34:21.245Z",
+  "startedAt": "2026-01-11T04:59:34.754Z"
+}

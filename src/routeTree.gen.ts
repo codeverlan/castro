@@ -10,12 +10,15 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TemplatesRouteImport } from './routes/templates'
+import { Route as HistoryRouteImport } from './routes/history'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiTemplatesIndexRouteImport } from './routes/api/templates/index'
 import { Route as ApiSessionsIndexRouteImport } from './routes/api/sessions/index'
 import { Route as ApiNotesIndexRouteImport } from './routes/api/notes/index'
 import { Route as ApiGapsIndexRouteImport } from './routes/api/gaps/index'
+import { Route as ApiAuditLogsIndexRouteImport } from './routes/api/audit-logs/index'
 import { Route as ApiTemplatesIdRouteImport } from './routes/api/templates/$id'
+import { Route as ApiSessionsHistoryRouteImport } from './routes/api/sessions/history'
 import { Route as ApiNotesExportRouteImport } from './routes/api/notes/export'
 import { Route as ApiNotesNoteIdRouteImport } from './routes/api/notes/$noteId'
 import { Route as ApiGapsBatchRouteImport } from './routes/api/gaps/batch'
@@ -24,6 +27,11 @@ import { Route as ApiGapsIdRouteImport } from './routes/api/gaps/$id'
 const TemplatesRoute = TemplatesRouteImport.update({
   id: '/templates',
   path: '/templates',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HistoryRoute = HistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -51,9 +59,19 @@ const ApiGapsIndexRoute = ApiGapsIndexRouteImport.update({
   path: '/api/gaps/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAuditLogsIndexRoute = ApiAuditLogsIndexRouteImport.update({
+  id: '/api/audit-logs/',
+  path: '/api/audit-logs/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiTemplatesIdRoute = ApiTemplatesIdRouteImport.update({
   id: '/api/templates/$id',
   path: '/api/templates/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiSessionsHistoryRoute = ApiSessionsHistoryRouteImport.update({
+  id: '/api/sessions/history',
+  path: '/api/sessions/history',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiNotesExportRoute = ApiNotesExportRouteImport.update({
@@ -79,12 +97,15 @@ const ApiGapsIdRoute = ApiGapsIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/history': typeof HistoryRoute
   '/templates': typeof TemplatesRoute
   '/api/gaps/$id': typeof ApiGapsIdRoute
   '/api/gaps/batch': typeof ApiGapsBatchRoute
   '/api/notes/$noteId': typeof ApiNotesNoteIdRoute
   '/api/notes/export': typeof ApiNotesExportRoute
+  '/api/sessions/history': typeof ApiSessionsHistoryRoute
   '/api/templates/$id': typeof ApiTemplatesIdRoute
+  '/api/audit-logs': typeof ApiAuditLogsIndexRoute
   '/api/gaps': typeof ApiGapsIndexRoute
   '/api/notes': typeof ApiNotesIndexRoute
   '/api/sessions': typeof ApiSessionsIndexRoute
@@ -92,12 +113,15 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/history': typeof HistoryRoute
   '/templates': typeof TemplatesRoute
   '/api/gaps/$id': typeof ApiGapsIdRoute
   '/api/gaps/batch': typeof ApiGapsBatchRoute
   '/api/notes/$noteId': typeof ApiNotesNoteIdRoute
   '/api/notes/export': typeof ApiNotesExportRoute
+  '/api/sessions/history': typeof ApiSessionsHistoryRoute
   '/api/templates/$id': typeof ApiTemplatesIdRoute
+  '/api/audit-logs': typeof ApiAuditLogsIndexRoute
   '/api/gaps': typeof ApiGapsIndexRoute
   '/api/notes': typeof ApiNotesIndexRoute
   '/api/sessions': typeof ApiSessionsIndexRoute
@@ -106,12 +130,15 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/history': typeof HistoryRoute
   '/templates': typeof TemplatesRoute
   '/api/gaps/$id': typeof ApiGapsIdRoute
   '/api/gaps/batch': typeof ApiGapsBatchRoute
   '/api/notes/$noteId': typeof ApiNotesNoteIdRoute
   '/api/notes/export': typeof ApiNotesExportRoute
+  '/api/sessions/history': typeof ApiSessionsHistoryRoute
   '/api/templates/$id': typeof ApiTemplatesIdRoute
+  '/api/audit-logs/': typeof ApiAuditLogsIndexRoute
   '/api/gaps/': typeof ApiGapsIndexRoute
   '/api/notes/': typeof ApiNotesIndexRoute
   '/api/sessions/': typeof ApiSessionsIndexRoute
@@ -121,12 +148,15 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/history'
     | '/templates'
     | '/api/gaps/$id'
     | '/api/gaps/batch'
     | '/api/notes/$noteId'
     | '/api/notes/export'
+    | '/api/sessions/history'
     | '/api/templates/$id'
+    | '/api/audit-logs'
     | '/api/gaps'
     | '/api/notes'
     | '/api/sessions'
@@ -134,12 +164,15 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/history'
     | '/templates'
     | '/api/gaps/$id'
     | '/api/gaps/batch'
     | '/api/notes/$noteId'
     | '/api/notes/export'
+    | '/api/sessions/history'
     | '/api/templates/$id'
+    | '/api/audit-logs'
     | '/api/gaps'
     | '/api/notes'
     | '/api/sessions'
@@ -147,12 +180,15 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/history'
     | '/templates'
     | '/api/gaps/$id'
     | '/api/gaps/batch'
     | '/api/notes/$noteId'
     | '/api/notes/export'
+    | '/api/sessions/history'
     | '/api/templates/$id'
+    | '/api/audit-logs/'
     | '/api/gaps/'
     | '/api/notes/'
     | '/api/sessions/'
@@ -161,12 +197,15 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  HistoryRoute: typeof HistoryRoute
   TemplatesRoute: typeof TemplatesRoute
   ApiGapsIdRoute: typeof ApiGapsIdRoute
   ApiGapsBatchRoute: typeof ApiGapsBatchRoute
   ApiNotesNoteIdRoute: typeof ApiNotesNoteIdRoute
   ApiNotesExportRoute: typeof ApiNotesExportRoute
+  ApiSessionsHistoryRoute: typeof ApiSessionsHistoryRoute
   ApiTemplatesIdRoute: typeof ApiTemplatesIdRoute
+  ApiAuditLogsIndexRoute: typeof ApiAuditLogsIndexRoute
   ApiGapsIndexRoute: typeof ApiGapsIndexRoute
   ApiNotesIndexRoute: typeof ApiNotesIndexRoute
   ApiSessionsIndexRoute: typeof ApiSessionsIndexRoute
@@ -180,6 +219,13 @@ declare module '@tanstack/react-router' {
       path: '/templates'
       fullPath: '/templates'
       preLoaderRoute: typeof TemplatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/history': {
+      id: '/history'
+      path: '/history'
+      fullPath: '/history'
+      preLoaderRoute: typeof HistoryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -217,11 +263,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiGapsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/audit-logs/': {
+      id: '/api/audit-logs/'
+      path: '/api/audit-logs'
+      fullPath: '/api/audit-logs'
+      preLoaderRoute: typeof ApiAuditLogsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/templates/$id': {
       id: '/api/templates/$id'
       path: '/api/templates/$id'
       fullPath: '/api/templates/$id'
       preLoaderRoute: typeof ApiTemplatesIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/sessions/history': {
+      id: '/api/sessions/history'
+      path: '/api/sessions/history'
+      fullPath: '/api/sessions/history'
+      preLoaderRoute: typeof ApiSessionsHistoryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/notes/export': {
@@ -257,12 +317,15 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  HistoryRoute: HistoryRoute,
   TemplatesRoute: TemplatesRoute,
   ApiGapsIdRoute: ApiGapsIdRoute,
   ApiGapsBatchRoute: ApiGapsBatchRoute,
   ApiNotesNoteIdRoute: ApiNotesNoteIdRoute,
   ApiNotesExportRoute: ApiNotesExportRoute,
+  ApiSessionsHistoryRoute: ApiSessionsHistoryRoute,
   ApiTemplatesIdRoute: ApiTemplatesIdRoute,
+  ApiAuditLogsIndexRoute: ApiAuditLogsIndexRoute,
   ApiGapsIndexRoute: ApiGapsIndexRoute,
   ApiNotesIndexRoute: ApiNotesIndexRoute,
   ApiSessionsIndexRoute: ApiSessionsIndexRoute,

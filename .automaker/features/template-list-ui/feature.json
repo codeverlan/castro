@@ -1,0 +1,16 @@
+{
+  "id": "template-list-ui",
+  "category": "UI",
+  "title": "Template Management Dashboard",
+  "description": "Build React component for displaying list of available note templates with search/filter functionality. Includes actions for edit, delete, duplicate, and create new template.",
+  "status": "verified",
+  "priority": 1,
+  "complexity": "moderate",
+  "dependencies": [
+    "template-crud-api",
+    "ui-component-library"
+  ],
+  "createdAt": "2026-01-10T13:42:09.202Z",
+  "updatedAt": "2026-01-11T05:32:01.165Z",
+  "startedAt": "2026-01-11T04:59:29.376Z"
+}

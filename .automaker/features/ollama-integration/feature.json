@@ -1,0 +1,16 @@
+{
+  "id": "ollama-integration",
+  "category": "Core",
+  "title": "Ollama Local LLM Integration",
+  "description": "Create service layer for communicating with local Ollama instance. Includes prompt templates for content mapping, professional rewriting, and gap analysis using llama3 or mistral models.",
+  "status": "verified",
+  "priority": 1,
+  "complexity": "complex",
+  "dependencies": [
+    "session-data-model"
+  ],
+  "createdAt": "2026-01-10T13:42:09.203Z",
+  "updatedAt": "2026-01-10T14:06:27.440Z",
+  "branchName": "master",
+  "startedAt": "2026-01-10T13:58:26.821Z"
+}

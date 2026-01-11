@@ -1,0 +1,17 @@
+{
+  "id": "content-mapping-engine",
+  "category": "Core",
+  "title": "Transcription-to-Template Mapping",
+  "description": "Implement AI-powered service that analyzes transcription text and intelligently maps content to appropriate template sections. Uses local LLM to understand clinical context and organize information.",
+  "status": "verified",
+  "priority": 1,
+  "complexity": "complex",
+  "dependencies": [
+    "ollama-integration",
+    "template-data-model"
+  ],
+  "createdAt": "2026-01-10T13:42:09.204Z",
+  "updatedAt": "2026-01-10T14:24:37.515Z",
+  "branchName": "master",
+  "startedAt": "2026-01-10T14:11:25.320Z"
+}

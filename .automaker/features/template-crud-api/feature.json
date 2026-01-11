@@ -1,0 +1,16 @@
+{
+  "id": "template-crud-api",
+  "category": "API",
+  "title": "Template Management API Endpoints",
+  "description": "Implement TanStack Start API routes for creating, reading, updating, and deleting note templates. Includes Zod validation middleware and proper error handling.",
+  "status": "verified",
+  "priority": 1,
+  "complexity": "moderate",
+  "dependencies": [
+    "template-data-model"
+  ],
+  "createdAt": "2026-01-10T13:42:09.202Z",
+  "updatedAt": "2026-01-10T14:18:46.517Z",
+  "branchName": "master",
+  "startedAt": "2026-01-10T14:11:25.491Z"
+}

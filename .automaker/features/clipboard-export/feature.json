@@ -1,0 +1,16 @@
+{
+  "id": "clipboard-export",
+  "category": "UI",
+  "title": "Copy-to-Clipboard Functionality",
+  "description": "Implement one-click copy-to-clipboard for completed notes with format preservation. Includes visual feedback and optional export to plain text or formatted document formats.",
+  "status": "verified",
+  "priority": 2,
+  "complexity": "simple",
+  "dependencies": [
+    "note-preview-ui"
+  ],
+  "createdAt": "2026-01-10T13:42:09.205Z",
+  "updatedAt": "2026-01-11T06:03:10.669Z",
+  "branchName": "master",
+  "startedAt": "2026-01-11T05:49:15.108Z"
+}

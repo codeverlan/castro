@@ -1,0 +1,18 @@
+{
+  "id": "session-dashboard-ui",
+  "category": "UI",
+  "title": "Main Session Dashboard",
+  "description": "Create primary application interface showing recent recordings, real-time processing status, completed notes, and quick actions. Includes status indicators for transcription and AI processing stages.",
+  "status": "verified",
+  "priority": 2,
+  "complexity": "moderate",
+  "dependencies": [
+    "file-watcher-service",
+    "ui-component-library",
+    "session-data-model"
+  ],
+  "createdAt": "2026-01-10T13:42:09.204Z",
+  "updatedAt": "2026-01-11T06:04:36.882Z",
+  "branchName": "master",
+  "startedAt": "2026-01-11T05:55:57.748Z"
+}

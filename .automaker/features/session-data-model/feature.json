@@ -1,0 +1,16 @@
+{
+  "id": "session-data-model",
+  "category": "Database",
+  "title": "Session and Transcription Schema",
+  "description": "Define database models for recording sessions, transcriptions, and processing status. Includes relationships to templates and support for storing raw audio file paths securely.",
+  "status": "verified",
+  "priority": 1,
+  "complexity": "simple",
+  "dependencies": [
+    "database-schema"
+  ],
+  "createdAt": "2026-01-10T13:42:09.203Z",
+  "updatedAt": "2026-01-10T13:58:25.655Z",
+  "branchName": "master",
+  "startedAt": "2026-01-10T13:56:14.812Z"
+}

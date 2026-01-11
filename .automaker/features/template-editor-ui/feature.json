@@ -1,0 +1,16 @@
+{
+  "id": "template-editor-ui",
+  "category": "UI",
+  "title": "Interactive Template Editor",
+  "description": "Create template editor interface with drag-and-drop section ordering, field type selection, and required field toggles. Uses React Hook Form for form management and shadcn/ui form components.",
+  "status": "verified",
+  "priority": 1,
+  "complexity": "complex",
+  "dependencies": [
+    "template-list-ui"
+  ],
+  "createdAt": "2026-01-10T13:42:09.202Z",
+  "updatedAt": "2026-01-11T05:50:32.956Z",
+  "branchName": "master",
+  "startedAt": "2026-01-11T05:35:32.262Z"
+}
