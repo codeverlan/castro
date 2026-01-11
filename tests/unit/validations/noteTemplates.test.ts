@@ -443,8 +443,8 @@ describe('Note Template Validations', () => {
         expect(result.success).toBe(true);
         if (result.success) {
           expect(result.data.isRequired).toBe(true);
-          expect(result.data.minLength).toBeNull();
-          expect(result.data.maxLength).toBeNull();
+          expect(result.data.minLength).toBeUndefined();
+          expect(result.data.maxLength).toBeUndefined();
         }
       });
 

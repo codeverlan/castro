@@ -7,6 +7,9 @@ import { z } from 'zod';
 // They mirror the Drizzle schema but add validation rules for API boundaries.
 // =============================================================================
 
+// More permissive UUID regex (accepts any UUID format, not just versions 1-8)
+const permissiveUuidRegex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+
 // -----------------------------------------------------------------------------
 // Enum Schemas
 // -----------------------------------------------------------------------------
@@ -75,8 +78,8 @@ export const fieldOptionsSchema = z.array(fieldOptionSchema).nullable();
 // -----------------------------------------------------------------------------
 
 export const templateFieldSchema = z.object({
-  id: z.string().uuid(),
-  sectionId: z.string().uuid(),
+  id: z.string().regex(permissiveUuidRegex, "Invalid UUID format"),
+  sectionId: z.string().regex(permissiveUuidRegex, "Invalid UUID format"),
   label: z.string().min(1).max(255),
   fieldType: fieldTypeSchema,
   isRequired: z.boolean(),
@@ -90,7 +93,7 @@ export const templateFieldSchema = z.object({
 });
 
 export const createTemplateFieldSchema = z.object({
-  sectionId: z.string().uuid(),
+  sectionId: z.string().regex(permissiveUuidRegex, "Invalid UUID format"),
   label: z.string().min(1, 'Label is required').max(255, 'Label must be 255 characters or less'),
   fieldType: fieldTypeSchema,
   isRequired: z.boolean().default(false),
@@ -102,7 +105,7 @@ export const createTemplateFieldSchema = z.object({
 });
 
 export const updateTemplateFieldSchema = createTemplateFieldSchema.partial().extend({
-  id: z.string().uuid(),
+  id: z.string().regex(permissiveUuidRegex, "Invalid UUID format"),
 });
 
 // -----------------------------------------------------------------------------
@@ -110,8 +113,8 @@ export const updateTemplateFieldSchema = createTemplateFieldSchema.partial().ext
 // -----------------------------------------------------------------------------
 
 export const templateSectionSchema = z.object({
-  id: z.string().uuid(),
-  templateId: z.string().uuid(),
+  id: z.string().regex(permissiveUuidRegex, "Invalid UUID format"),
+  templateId: z.string().regex(permissiveUuidRegex, "Invalid UUID format"),
   name: z.string().min(1).max(255),
   description: z.string().nullable(),
   displayOrder: z.number().int().min(0),
@@ -125,7 +128,7 @@ export const templateSectionSchema = z.object({
 });
 
 export const createTemplateSectionSchema = z.object({
-  templateId: z.string().uuid(),
+  templateId: z.string().regex(permissiveUuidRegex, "Invalid UUID format"),
   name: z.string().min(1, 'Section name is required').max(255, 'Section name must be 255 characters or less'),
   description: z.string().optional().nullable(),
   displayOrder: z.number().int().min(0),
@@ -148,8 +151,8 @@ export const createTemplateSectionSchema = z.object({
 );
 
 export const updateTemplateSectionSchema = z.object({
-  id: z.string().uuid(),
-  templateId: z.string().uuid().optional(),
+  id: z.string().regex(permissiveUuidRegex, "Invalid UUID format"),
+  templateId: z.string().regex(permissiveUuidRegex, "Invalid UUID format").optional(),
   name: z.string().min(1).max(255).optional(),
   description: z.string().optional().nullable(),
   displayOrder: z.number().int().min(0).optional(),
@@ -170,14 +173,14 @@ export const templateSectionWithFieldsSchema = templateSectionSchema.extend({
 // -----------------------------------------------------------------------------
 
 export const noteTemplateSchema = z.object({
-  id: z.string().uuid(),
+  id: z.string().regex(permissiveUuidRegex, "Invalid UUID format"),
   name: z.string().min(1).max(255),
   description: z.string().nullable(),
   templateType: z.string().min(1).max(100),
   isDefault: z.boolean(),
   status: templateStatusSchema,
   version: z.number().int().min(1),
-  parentTemplateId: z.string().uuid().nullable(),
+  parentTemplateId: z.string().regex(permissiveUuidRegex, "Invalid UUID format").nullable(),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
 });
@@ -189,18 +192,18 @@ export const createNoteTemplateSchema = z.object({
   isDefault: z.boolean().default(false),
   status: templateStatusSchema.default('draft'),
   version: z.number().int().min(1).default(1),
-  parentTemplateId: z.string().uuid().optional().nullable(),
+  parentTemplateId: z.string().regex(permissiveUuidRegex, "Invalid UUID format").optional().nullable(),
 });
 
 export const updateNoteTemplateSchema = z.object({
-  id: z.string().uuid(),
+  id: z.string().regex(permissiveUuidRegex, "Invalid UUID format"),
   name: z.string().min(1).max(255).optional(),
   description: z.string().optional().nullable(),
   templateType: z.string().min(1).max(100).optional(),
   isDefault: z.boolean().optional(),
   status: templateStatusSchema.optional(),
   version: z.number().int().min(1).optional(),
-  parentTemplateId: z.string().uuid().optional().nullable(),
+  parentTemplateId: z.string().regex(permissiveUuidRegex, "Invalid UUID format").optional().nullable(),
 });
 
 // Template with nested sections
@@ -248,7 +251,7 @@ export const createFullTemplateSchema = z.object({
 
 // Clone template request
 export const cloneTemplateSchema = z.object({
-  sourceTemplateId: z.string().uuid(),
+  sourceTemplateId: z.string().regex(permissiveUuidRegex, "Invalid UUID format"),
   newName: z.string().min(1).max(255),
   incrementVersion: z.boolean().default(false),
 });

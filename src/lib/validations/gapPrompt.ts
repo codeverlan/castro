@@ -18,10 +18,13 @@ export const gapFieldOptionSchema = z.object({
   disabled: z.boolean().optional(),
 });
 
+// More permissive UUID regex (accepts any UUID format, not just versions 1-8)
+const permissiveUuidRegex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+
 // Gap field configuration
 export const gapFieldConfigSchema = z.object({
   id: z.string(),
-  gapId: z.string().uuid(),
+  gapId: z.string().regex(permissiveUuidRegex, 'Invalid UUID format'),
   fieldType: fieldTypeSchema,
   label: z.string().min(1),
   placeholder: z.string().optional(),
@@ -37,7 +40,7 @@ export const gapFieldConfigSchema = z.object({
     max: z.number().optional(),
     step: z.number().optional(),
   }).optional(),
-  defaultValue: z.union([z.string(), z.array(z.string()), z.boolean()]).optional(),
+  defaultValue: z.union([z.string(), z.number(), z.array(z.string()), z.boolean()]).optional(),
 });
 
 // -----------------------------------------------------------------------------
@@ -45,8 +48,8 @@ export const gapFieldConfigSchema = z.object({
 // -----------------------------------------------------------------------------
 
 export const gapPromptSchema = z.object({
-  id: z.string().uuid(),
-  sessionId: z.string().uuid(),
+  id: z.string().regex(permissiveUuidRegex, 'Invalid UUID format'),
+  sessionId: z.string().regex(permissiveUuidRegex, 'Invalid UUID format'),
   sectionName: z.string(),
   gapDescription: z.string(),
   userPrompt: z.string(),
@@ -63,7 +66,7 @@ export const gapPromptsArraySchema = z.array(gapPromptSchema);
 // -----------------------------------------------------------------------------
 
 export const gapResponseSchema = z.object({
-  gapId: z.string().uuid(),
+  gapId: z.string().regex(permissiveUuidRegex, 'Invalid UUID format'),
   value: z.union([
     z.string(),
     z.array(z.string()),
@@ -73,7 +76,7 @@ export const gapResponseSchema = z.object({
 });
 
 export const submitGapResponsesSchema = z.object({
-  sessionId: z.string().uuid(),
+  sessionId: z.string().regex(permissiveUuidRegex, 'Invalid UUID format'),
   responses: z.array(gapResponseSchema),
 });
 

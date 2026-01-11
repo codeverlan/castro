@@ -1,0 +1,14 @@
+{
+  "board": {
+    "showCompletedFeatures": false,
+    "categoriesFilter": ["API", "Core", "Database", "Testing", "UI"],
+    "statusFilter": ["pending", "in-progress"],
+    "groupBy": "status",
+    "sortBy": "priority"
+  },
+  "testing": {
+    "enabled": true,
+    "visible": true,
+    "showOnMainBoard": true
+  }
+}

@@ -1,0 +1,283 @@
+[
+  {
+    "id": "clipboard-export",
+    "category": "UI",
+    "title": "Copy-to-Clipboard Functionality",
+    "status": "completed",
+    "priority": 2,
+    "dependencies": [
+      "note-preview-ui"
+    ]
+  },
+  {
+    "id": "content-mapping-engine",
+    "category": "Core",
+    "title": "Transcription-to-Template Mapping",
+    "status": "completed",
+    "priority": 1,
+    "dependencies": [
+      "ollama-integration",
+      "template-data-model"
+    ]
+  },
+  {
+    "id": "database-schema",
+    "category": "Database",
+    "title": "PostgreSQL Schema with Drizzle ORM",
+    "status": "completed",
+    "priority": 1,
+    "dependencies": [
+      "project-scaffolding"
+    ]
+  },
+  {
+    "id": "default-templates",
+    "category": "Database",
+    "title": "Seed Default Clinical Templates",
+    "status": "completed",
+    "priority": 2,
+    "dependencies": [
+      "template-data-model"
+    ]
+  },
+  {
+    "id": "file-watcher-service",
+    "category": "Core",
+    "title": "Audio File Monitoring Service",
+    "status": "completed",
+    "priority": 1,
+    "dependencies": [
+      "whisper-integration"
+    ]
+  },
+  {
+    "id": "gap-detection-engine",
+    "category": "Core",
+    "title": "Missing Information Detection",
+    "status": "completed",
+    "priority": 1,
+    "dependencies": [
+      "content-mapping-engine"
+    ]
+  },
+  {
+    "id": "gap-prompt-ui",
+    "category": "UI",
+    "title": "Interactive Gap Filling Interface",
+    "status": "completed",
+    "priority": 1,
+    "dependencies": [
+      "gap-detection-engine",
+      "ui-component-library"
+    ]
+  },
+  {
+    "id": "note-generation-service",
+    "category": "Core",
+    "title": "Professional Note Generation",
+    "status": "completed",
+    "priority": 1,
+    "dependencies": [
+      "content-mapping-engine",
+      "gap-prompt-ui"
+    ]
+  },
+  {
+    "id": "note-preview-ui",
+    "category": "UI",
+    "title": "Note Preview and Edit Interface",
+    "status": "completed",
+    "priority": 1,
+    "dependencies": [
+      "note-generation-service",
+      "ui-component-library"
+    ]
+  },
+  {
+    "id": "ollama-integration",
+    "category": "Core",
+    "title": "Ollama Local LLM Integration",
+    "status": "completed",
+    "priority": 1,
+    "dependencies": [
+      "session-data-model"
+    ]
+  },
+  {
+    "id": "project-scaffolding",
+    "category": "Core",
+    "title": "TanStack Start Project Setup",
+    "status": "completed",
+    "priority": 1,
+    "dependencies": []
+  },
+  {
+    "id": "session-dashboard-ui",
+    "category": "UI",
+    "title": "Main Session Dashboard",
+    "status": "completed",
+    "priority": 2,
+    "dependencies": [
+      "file-watcher-service",
+      "ui-component-library",
+      "session-data-model"
+    ]
+  },
+  {
+    "id": "session-data-model",
+    "category": "Database",
+    "title": "Session and Transcription Schema",
+    "status": "completed",
+    "priority": 1,
+    "dependencies": [
+      "database-schema"
+    ]
+  },
+  {
+    "id": "template-crud-api",
+    "category": "API",
+    "title": "Template Management API Endpoints",
+    "status": "completed",
+    "priority": 1,
+    "dependencies": [
+      "template-data-model"
+    ]
+  },
+  {
+    "id": "template-data-model",
+    "category": "Database",
+    "title": "Note Template Data Model",
+    "status": "completed",
+    "priority": 1,
+    "dependencies": [
+      "database-schema"
+    ]
+  },
+  {
+    "id": "template-editor-ui",
+    "category": "UI",
+    "title": "Interactive Template Editor",
+    "status": "completed",
+    "priority": 1,
+    "dependencies": [
+      "template-list-ui"
+    ]
+  },
+  {
+    "id": "template-list-ui",
+    "category": "UI",
+    "title": "Template Management Dashboard",
+    "status": "completed",
+    "priority": 1,
+    "dependencies": [
+      "template-crud-api",
+      "ui-component-library"
+    ]
+  },
+  {
+    "id": "test-content-mapping",
+    "category": "Testing",
+    "title": "Unit Tests - Content Mapping Service",
+    "status": "in-progress",
+    "priority": 2,
+    "dependencies": [
+      "test-infrastructure",
+      "content-mapping-engine"
+    ]
+  },
+  {
+    "id": "test-file-watcher",
+    "category": "Testing",
+    "title": "Unit Tests - File Watcher Service",
+    "status": "in-progress",
+    "priority": 2,
+    "dependencies": [
+      "test-infrastructure",
+      "file-watcher-service"
+    ]
+  },
+  {
+    "id": "test-gap-detection",
+    "category": "Testing",
+    "title": "Unit Tests - Gap Detection Service",
+    "status": "in-progress",
+    "priority": 2,
+    "dependencies": [
+      "test-infrastructure",
+      "gap-detection-engine"
+    ]
+  },
+  {
+    "id": "test-gap-prompt-validation",
+    "category": "Testing",
+    "title": "Unit Tests - Gap Prompt Validation",
+    "status": "completed",
+    "priority": 2,
+    "dependencies": [
+      "test-infrastructure"
+    ]
+  },
+  {
+    "id": "test-infrastructure",
+    "category": "Testing",
+    "title": "Test Infrastructure Setup",
+    "status": "in-progress",
+    "priority": 1,
+    "dependencies": []
+  },
+  {
+    "id": "test-note-templates-validation",
+    "category": "Testing",
+    "title": "Unit Tests - Note Templates Validation",
+    "status": "completed",
+    "priority": 2,
+    "dependencies": [
+      "test-infrastructure"
+    ]
+  },
+  {
+    "id": "test-utils",
+    "category": "Testing",
+    "title": "Unit Tests - Utility Functions",
+    "status": "in-progress",
+    "priority": 3,
+    "dependencies": [
+      "test-infrastructure"
+    ]
+  },
+  {
+    "id": "test-validation-coverage",
+    "category": "Testing",
+    "title": "Achieve Test Coverage Thresholds",
+    "status": "pending",
+    "priority": 1,
+    "dependencies": [
+      "test-gap-prompt-validation",
+      "test-note-templates-validation",
+      "test-utils",
+      "test-gap-detection",
+      "test-content-mapping",
+      "test-file-watcher"
+    ]
+  },
+  {
+    "id": "ui-component-library",
+    "category": "UI",
+    "title": "shadcn/ui Component Integration",
+    "status": "completed",
+    "priority": 1,
+    "dependencies": [
+      "project-scaffolding"
+    ]
+  },
+  {
+    "id": "whisper-integration",
+    "category": "Core",
+    "title": "Whisper.cpp Transcription Service",
+    "status": "completed",
+    "priority": 1,
+    "dependencies": [
+      "database-schema"
+    ]
+  }
+]

@@ -1,0 +1,34 @@
+{
+  "views": [
+    {
+      "id": "all",
+      "name": "All Features",
+      "description": "Show all features across all categories",
+      "filters": {
+        "categories": ["API", "Core", "Database", "Testing", "UI"],
+        "statuses": ["pending", "in-progress", "completed"]
+      }
+    },
+    {
+      "id": "active",
+      "name": "Active Work",
+      "description": "Show only pending and in-progress features",
+      "filters": {
+        "categories": ["API", "Core", "Database", "Testing", "UI"],
+        "statuses": ["pending", "in-progress"]
+      }
+    },
+    {
+      "id": "testing",
+      "name": "Testing",
+      "description": "Show testing features only",
+      "filters": {
+        "categories": ["Testing"],
+        "statuses": ["pending", "in-progress", "completed"]
+      }
+    }
+  ],
+  "defaultView": "active",
+  "showCompletedFeatures": true,
+  "groupBy": "category"
+}

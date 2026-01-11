@@ -1,0 +1,50 @@
+[
+  {
+    "id": "test-infrastructure",
+    "category": "Testing",
+    "title": "Test Infrastructure Setup",
+    "status": "in-progress",
+    "priority": 1,
+    "progress": "Infrastructure complete, tests running"
+  },
+  {
+    "id": "test-validation-coverage",
+    "category": "Testing",
+    "title": "Achieve Test Coverage Thresholds",
+    "status": "pending",
+    "priority": 1,
+    "blockedBy": ["test-infrastructure", "test-file-watcher", "test-content-mapping", "test-gap-detection", "test-utils"]
+  },
+  {
+    "id": "test-content-mapping",
+    "category": "Testing",
+    "title": "Unit Tests - Content Mapping Service",
+    "status": "in-progress",
+    "priority": 2,
+    "progress": "8/18 tests passing (44.4%)"
+  },
+  {
+    "id": "test-file-watcher",
+    "category": "Testing",
+    "title": "Unit Tests - File Watcher Service",
+    "status": "in-progress",
+    "priority": 2,
+    "progress": "23/40 tests passing (57.5%)"
+  },
+  {
+    "id": "test-gap-detection",
+    "category": "Testing",
+    "title": "Unit Tests - Gap Detection Service",
+    "status": "in-progress",
+    "priority": 2,
+    "progress": "18/20 tests passing (90%)"
+  },
+  {
+    "id": "test-utils",
+    "category": "Testing",
+    "title": "Unit Tests - Utility Functions",
+    "status": "in-progress",
+    "priority": 3,
+    "progress": "21/27 tests passing (77.8%)"
+  }
+]

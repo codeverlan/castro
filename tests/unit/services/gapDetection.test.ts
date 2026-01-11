@@ -17,9 +17,18 @@ const mockOllamaService = {
 
 describe('GapDetectionEngine', () => {
   let engine: GapDetectionEngine;
+  let mockTime = 1000;
 
   beforeEach(() => {
     vi.clearAllMocks();
+
+    // Mock Date.now() to return incrementing values for timing measurements
+    mockTime = 1000;
+    vi.spyOn(Date, 'now').mockImplementation(() => {
+      mockTime += 100; // Increment by 100ms for each call
+      return mockTime;
+    });
+
     engine = new GapDetectionEngine(mockOllamaService);
   });
 

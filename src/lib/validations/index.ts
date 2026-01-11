@@ -3,3 +3,4 @@
 
 export * from './noteTemplates';
 export * from './sessionHistory';
+export * from './gapPrompt';

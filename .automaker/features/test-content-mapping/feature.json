@@ -3,11 +3,15 @@
   "category": "Testing",
   "title": "Unit Tests - Content Mapping Service",
   "description": "Create unit tests for the content mapping engine service. Test clinical context extraction from transcriptions, section mapping logic, content rewriting for professional tone, template-based organization, and error handling. Mock external dependencies and test edge cases with various transcription formats. Approximately 25 test cases.",
-  "status": "in-progress",
+  "status": "completed",
   "priority": 2,
   "complexity": "medium",
-  "dependencies": ["test-infrastructure", "content-mapping-engine"],
+  "dependencies": [
+    "test-infrastructure",
+    "content-mapping-engine"
+  ],
   "createdAt": "2026-01-10T14:00:00.000Z",
-  "updatedAt": "2026-01-10T14:00:00.000Z",
-  "branchName": "feature/test-content-mapping"
+  "updatedAt": "2026-01-11T12:22:00.000Z",
+  "branchName": "feature/test-content-mapping",
+  "completedAt": "2026-01-11T12:22:00.000Z"
 }

@@ -3,11 +3,15 @@
   "category": "Testing",
   "title": "Unit Tests - Gap Detection Service",
   "description": "Create unit tests for the gap detection engine service. Test rule-based gap detection, LLM-based detection, gap scoring, priority determination, and health checks. Mock external dependencies (Ollama, database) and test error handling, edge cases, and integration with template schemas. Approximately 20 test cases.",
-  "status": "in-progress",
+  "status": "completed",
   "priority": 2,
   "complexity": "medium",
-  "dependencies": ["test-infrastructure", "gap-detection-engine"],
+  "dependencies": [
+    "test-infrastructure",
+    "gap-detection-engine"
+  ],
   "createdAt": "2026-01-10T14:00:00.000Z",
-  "updatedAt": "2026-01-10T14:00:00.000Z",
-  "branchName": "feature/test-gap-detection"
+  "updatedAt": "2026-01-11T12:22:00.000Z",
+  "branchName": "feature/test-gap-detection",
+  "completedAt": "2026-01-11T12:22:00.000Z"
 }

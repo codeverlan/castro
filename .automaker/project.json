@@ -1,0 +1,19 @@
+{
+  "name": "castro",
+  "path": "/Users/tyler-lcsw/projects/castro",
+  "active": true,
+  "lastActive": "2026-01-11T07:15:00.000Z",
+  "features": {
+    "total": 27,
+    "completed": 21,
+    "inProgress": 5,
+    "pending": 1
+  },
+  "testing": {
+    "framework": "vitest",
+    "totalTests": 194,
+    "passing": 160,
+    "failing": 34,
+    "passRate": 82.5
+  }
+}

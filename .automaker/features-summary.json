@@ -1,0 +1,41 @@
+{
+  "lastUpdated": "2026-01-11T07:10:00.000Z",
+  "total": 27,
+  "byStatus": {
+    "completed": 21,
+    "in-progress": 5,
+    "pending": 1
+  },
+  "byCategory": {
+    "Testing": {
+      "total": 8,
+      "completed": 2,
+      "in-progress": 5,
+      "pending": 1
+    },
+    "Database": {
+      "total": 4,
+      "completed": 4,
+      "in-progress": 0,
+      "pending": 0
+    },
+    "Core": {
+      "total": 7,
+      "completed": 7,
+      "in-progress": 0,
+      "pending": 0
+    },
+    "UI": {
+      "total": 7,
+      "completed": 7,
+      "in-progress": 0,
+      "pending": 0
+    },
+    "API": {
+      "total": 1,
+      "completed": 1,
+      "in-progress": 0,
+      "pending": 0
+    }
+  }
+}

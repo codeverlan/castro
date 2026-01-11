@@ -1,0 +1,17 @@
+{
+  "currentView": "active",
+  "availableViews": {
+    "all": {
+      "name": "All Features",
+      "filter": { "status": ["pending", "in-progress", "completed"] }
+    },
+    "active": {
+      "name": "Active Work", 
+      "filter": { "status": ["pending", "in-progress"] }
+    },
+    "testing": {
+      "name": "Testing Only",
+      "filter": { "category": "Testing" }
+    }
+  }
+}
