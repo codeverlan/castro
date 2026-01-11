@@ -1,0 +1,13 @@
+{
+  "id": "test-gap-prompt-validation",
+  "category": "Testing",
+  "title": "Unit Tests - Gap Prompt Validation",
+  "description": "Create comprehensive unit tests for gap prompt validation schemas. Test field options (string, select, multiselect, date, number, text, checkbox), prompt configurations, response validation, and UI state management. Total of 28 test cases covering all validation scenarios including edge cases and error handling.",
+  "status": "in-progress",
+  "priority": 2,
+  "complexity": "simple",
+  "dependencies": ["test-infrastructure"],
+  "createdAt": "2026-01-10T14:00:00.000Z",
+  "updatedAt": "2026-01-10T14:00:00.000Z",
+  "branchName": "feature/test-gap-prompt-validation"
+}

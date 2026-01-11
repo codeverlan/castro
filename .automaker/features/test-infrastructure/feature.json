@@ -1,0 +1,14 @@
+{
+  "id": "test-infrastructure",
+  "category": "Testing",
+  "title": "Test Infrastructure Setup",
+  "description": "Configure Vitest testing framework with React support, path aliases, and coverage reporting. Setup test environment with jsdom/happy-dom, React Testing Library, and mock configurations for external dependencies (database, Ollama, file system). Create test setup files and NPM scripts for running tests, watch mode, coverage, and UI.",
+  "status": "in-progress",
+  "priority": 1,
+  "complexity": "simple",
+  "dependencies": [],
+  "createdAt": "2026-01-10T14:00:00.000Z",
+  "updatedAt": "2026-01-10T14:00:00.000Z",
+  "branchName": "feature/test-infrastructure",
+  "startedAt": "2026-01-10T14:00:00.000Z"
+}
