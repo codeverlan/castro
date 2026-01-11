@@ -3,7 +3,7 @@
   "category": "UI",
   "title": "Copy-to-Clipboard Functionality",
   "description": "Implement one-click copy-to-clipboard for completed notes with format preservation. Includes visual feedback and optional export to plain text or formatted document formats.",
-  "status": "verified",
+  "status": "completed",
   "priority": 2,
   "complexity": "simple",
   "dependencies": [

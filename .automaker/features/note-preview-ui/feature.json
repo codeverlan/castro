@@ -3,7 +3,7 @@
   "category": "UI",
   "title": "Note Preview and Edit Interface",
   "description": "Display completed clinical note with proper formatting, section headers, and professional styling. Includes inline editing capability for minor corrections before finalizing.",
-  "status": "verified",
+  "status": "completed",
   "priority": 1,
   "complexity": "moderate",
   "dependencies": [

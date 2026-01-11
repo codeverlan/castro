@@ -3,7 +3,7 @@
   "category": "Core",
   "title": "Missing Information Detection",
   "description": "Build analysis engine that compares mapped content against template required fields to identify gaps. Generates specific, contextual questions to prompt user for missing information.",
-  "status": "verified",
+  "status": "completed",
   "priority": 1,
   "complexity": "moderate",
   "dependencies": [

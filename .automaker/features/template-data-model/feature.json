@@ -3,7 +3,7 @@
   "category": "Database",
   "title": "Note Template Data Model",
   "description": "Create Drizzle schema for note templates with support for customizable sections, required fields, field types, and validation rules. Includes TypeScript types and Zod schemas for runtime validation.",
-  "status": "verified",
+  "status": "completed",
   "priority": 1,
   "complexity": "moderate",
   "dependencies": [

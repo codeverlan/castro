@@ -3,7 +3,7 @@
   "category": "Core",
   "title": "Audio File Monitoring Service",
   "description": "Build chokidar-based file system watcher that monitors designated folder for new audio files (mp3, wav, m4a, ogg). Automatically triggers transcription pipeline and updates database with session records.",
-  "status": "verified",
+  "status": "completed",
   "priority": 1,
   "complexity": "moderate",
   "dependencies": [

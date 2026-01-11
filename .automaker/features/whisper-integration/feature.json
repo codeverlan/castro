@@ -3,7 +3,7 @@
   "category": "Core",
   "title": "Whisper.cpp Transcription Service",
   "description": "Implement Node.js service that interfaces with local Whisper.cpp installation to transcribe audio files. Includes queue management, progress tracking, and error handling for transcription failures.",
-  "status": "verified",
+  "status": "completed",
   "priority": 1,
   "complexity": "complex",
   "dependencies": [

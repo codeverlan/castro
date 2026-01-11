@@ -3,7 +3,7 @@
   "category": "Database",
   "title": "Session and Transcription Schema",
   "description": "Define database models for recording sessions, transcriptions, and processing status. Includes relationships to templates and support for storing raw audio file paths securely.",
-  "status": "verified",
+  "status": "completed",
   "priority": 1,
   "complexity": "simple",
   "dependencies": [

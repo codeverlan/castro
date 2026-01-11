@@ -3,7 +3,7 @@
   "category": "Core",
   "title": "TanStack Start Project Setup",
   "description": "Initialize TanStack Start project with TypeScript, configure Vite build tooling, and set up basic project structure with app directory. Includes package.json with all required dependencies and initial routing configuration.",
-  "status": "verified",
+  "status": "completed",
   "priority": 1,
   "complexity": "simple",
   "dependencies": [],

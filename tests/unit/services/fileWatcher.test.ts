@@ -1,25 +1,30 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { FileWatcherService } from '~/services/fileWatcher';
-import * as fs from 'fs/promises';
 import type { Stats } from 'fs';
-import { chokidar } from 'chokidar';
 import { db } from '~/db';
 import { sessions, auditLogs, noteTemplates } from '~/db/schema';
 import { whisperService } from '~/services/whisper';
 
 // Mock dependencies
-vi.mock('fs/promises');
-vi.mock('chokidar');
+vi.mock('fs/promises', () => ({
+  mkdir: vi.fn(),
+  stat: vi.fn(),
+}));
+
+vi.mock('chokidar', () => ({
+  default: { watch: vi.fn() },
+}));
+
 vi.mock('~/db');
 vi.mock('~/services/whisper');
 
-const mockFs = fs as unknown as {
-  mkdir: ReturnType<typeof vi.fn>;
-  stat: ReturnType<typeof vi.fn>;
-};
-const mockChokidar = chokidar as unknown as {
-  watch: ReturnType<typeof vi.fn>;
-};
+// Import mocked modules
+import * as fs from 'fs/promises';
+const mockMkdir = vi.mocked(fs.mkdir);
+const mockStat = vi.mocked(fs.stat);
+
+import chokidar from 'chokidar';
+const mockWatch = (chokidar as any).watch as ReturnType<typeof vi.fn>;
 
 describe('FileWatcherService', () => {
   let service: FileWatcherService;
@@ -29,16 +34,26 @@ describe('FileWatcherService', () => {
     service = new FileWatcherService();
 
     // Setup default mocks
-    mockFs.mkdir.mockResolvedValue(undefined);
-    mockFs.stat.mockResolvedValue({
+    mockMkdir.mockResolvedValue(undefined);
+    mockStat.mockResolvedValue({
       isFile: () => true,
       size: 1024,
     } as Stats);
 
-    mockChokidar.watch.mockReturnValue({
-      on: vi.fn().mockReturnThis(),
+    // Create a mock watcher that handles the 'ready' event
+    const mockWatcherInstance: any = {
+      on: vi.fn((event: string, handler: (...args: unknown[]) => void) => {
+        mockWatcherInstance.eventHandlers = mockWatcherInstance.eventHandlers || {};
+        mockWatcherInstance.eventHandlers[event] = handler;
+        // Trigger 'ready' event immediately for tests
+        if (event === 'ready') {
+          setTimeout(() => handler(), 0);
+        }
+        return mockWatcherInstance;
+      }),
       close: vi.fn().mockResolvedValue(undefined),
-    });
+    };
+    mockWatch.mockReturnValue(mockWatcherInstance);
 
     (db.insert as any).mockResolvedValue({ returning: vi.fn().mockResolvedValue([{ id: 'session-1' }]) });
     (db.update as any).mockReturnValue({ where: vi.fn().mockReturnValue({ returning: vi.fn() }) });
@@ -62,8 +77,8 @@ describe('FileWatcherService', () => {
       const result = await service.start();
 
       expect(result.success).toBe(true);
-      expect(mockChokidar.watch).toHaveBeenCalled();
-      expect(mockFs.mkdir).toHaveBeenCalled();
+      expect(mockWatch).toHaveBeenCalled();
+      expect(mockMkdir).toHaveBeenCalled();
     });
 
     it('should fail if already started', async () => {
@@ -86,7 +101,7 @@ describe('FileWatcherService', () => {
     });
 
     it('should create watch directory if it does not exist', async () => {
-      mockFs.mkdir.mockRejectedValueOnce(new Error('Permission denied'));
+      mockMkdir.mockRejectedValueOnce(new Error('Permission denied'));
 
       const result = await service.start();
 
@@ -95,7 +110,7 @@ describe('FileWatcherService', () => {
     });
 
     it('should handle watcher errors gracefully', async () => {
-      mockChokidar.watch.mockReturnValue({
+      mockWatch.mockReturnValue({
         on: vi.fn().mockImplementation((event, handler) => {
           if (event === 'error') {
             // Simulate error
@@ -229,7 +244,7 @@ describe('FileWatcherService', () => {
     });
 
     it('should enforce minimum file size', async () => {
-      mockFs.stat.mockResolvedValue({
+      mockStat.mockResolvedValue({
         isFile: () => true,
         size: 100, // Very small file
       } as Stats);
@@ -240,7 +255,7 @@ describe('FileWatcherService', () => {
     });
 
     it('should enforce maximum file size', async () => {
-      mockFs.stat.mockResolvedValue({
+      mockStat.mockResolvedValue({
         isFile: () => true,
         size: 1024 * 1024 * 1024, // 1GB - too large
       } as Stats);
@@ -309,7 +324,7 @@ describe('FileWatcherService', () => {
 
   describe('error handling', () => {
     it('should handle file stat errors', async () => {
-      mockFs.stat.mockRejectedValue(new Error('Cannot access file'));
+      mockStat.mockRejectedValue(new Error('Cannot access file'));
 
       await service.start();
 
@@ -318,7 +333,7 @@ describe('FileWatcherService', () => {
     });
 
     it('should handle non-file objects', async () => {
-      mockFs.stat.mockResolvedValue({
+      mockStat.mockResolvedValue({
         isFile: () => false, // Directory or other
         size: 1024,
       } as Stats);
@@ -402,7 +417,7 @@ describe('FileWatcherService', () => {
     });
 
     it('should emit watcher_error event', async () => {
-      mockChokidar.watch.mockReturnValue({
+      mockWatch.mockReturnValue({
         on: vi.fn().mockImplementation((event, handler) => {
           if (event === 'error') {
             setTimeout(() => handler(new Error('Watcher error')), 0);

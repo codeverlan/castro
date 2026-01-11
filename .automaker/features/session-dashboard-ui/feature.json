@@ -3,7 +3,7 @@
   "category": "UI",
   "title": "Main Session Dashboard",
   "description": "Create primary application interface showing recent recordings, real-time processing status, completed notes, and quick actions. Includes status indicators for transcription and AI processing stages.",
-  "status": "verified",
+  "status": "completed",
   "priority": 2,
   "complexity": "moderate",
   "dependencies": [

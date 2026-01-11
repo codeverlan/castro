@@ -3,7 +3,7 @@
   "category": "Database",
   "title": "PostgreSQL Schema with Drizzle ORM",
   "description": "Define database schema using Drizzle ORM for note templates, sessions, transcriptions, and audit logs. Includes migration setup and connection configuration with proper type definitions.",
-  "status": "verified",
+  "status": "completed",
   "priority": 1,
   "complexity": "moderate",
   "dependencies": [

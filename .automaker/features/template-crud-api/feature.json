@@ -3,7 +3,7 @@
   "category": "API",
   "title": "Template Management API Endpoints",
   "description": "Implement TanStack Start API routes for creating, reading, updating, and deleting note templates. Includes Zod validation middleware and proper error handling.",
-  "status": "verified",
+  "status": "completed",
   "priority": 1,
   "complexity": "moderate",
   "dependencies": [

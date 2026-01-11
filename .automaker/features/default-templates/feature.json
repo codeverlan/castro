@@ -3,7 +3,7 @@
   "category": "Database",
   "title": "Seed Default Clinical Templates",
   "description": "Create database seed script with default clinical note templates (SOAP, DAP, BIRP) including standard sections and field definitions. Ensures users have working templates on first launch.",
-  "status": "verified",
+  "status": "completed",
   "priority": 2,
   "complexity": "simple",
   "dependencies": [
