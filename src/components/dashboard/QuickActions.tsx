@@ -8,7 +8,8 @@ import {
   Settings,
   RefreshCw,
   Upload,
-  History
+  History,
+  Database
 } from "lucide-react"
 
 export interface QuickAction {
@@ -26,6 +27,7 @@ export interface QuickActionsProps extends React.HTMLAttributes<HTMLDivElement> 
   onOpenSettings?: () => void
   onViewHistory?: () => void
   onRefresh?: () => void
+  onManageS3Credentials?: () => void
   isRefreshing?: boolean
 }
 
@@ -38,6 +40,7 @@ const QuickActions = React.forwardRef<HTMLDivElement, QuickActionsProps>(
       onOpenSettings,
       onViewHistory,
       onRefresh,
+      onManageS3Credentials,
       isRefreshing,
       ...props
     },
@@ -47,7 +50,7 @@ const QuickActions = React.forwardRef<HTMLDivElement, QuickActionsProps>(
       {
         id: "watch-folder",
         label: "Watch Folder",
-        description: "Open the audio drop folder",
+        description: "Open audio drop folder",
         icon: FolderOpen,
         onClick: () => onOpenWatchFolder?.(),
         variant: "outline",
@@ -66,6 +69,14 @@ const QuickActions = React.forwardRef<HTMLDivElement, QuickActionsProps>(
         description: "View session history",
         icon: History,
         onClick: () => onViewHistory?.(),
+        variant: "outline",
+      },
+      {
+        id: "s3-credentials",
+        label: "S3 Credentials",
+        description: "Manage AWS S3 credentials",
+        icon: Database,
+        onClick: () => onManageS3Credentials?.(),
         variant: "outline",
       },
       {

@@ -1,32 +1,3 @@
 [
-  {
-    "id": "testing",
-    "name": "Testing",
-    "description": "Test infrastructure and unit tests",
-    "color": "blue"
-  },
-  {
-    "id": "database",
-    "name": "Database",
-    "description": "Database schemas and migrations",
-    "color": "purple"
-  },
-  {
-    "id": "core",
-    "name": "Core",
-    "description": "Core services and business logic",
-    "color": "green"
-  },
-  {
-    "id": "ui",
-    "name": "UI",
-    "description": "User interface components",
-    "color": "orange"
-  },
-  {
-    "id": "api",
-    "name": "API",
-    "description": "API endpoints and routes",
-    "color": "yellow"
-  }
+  "Uncategorized"
 ]

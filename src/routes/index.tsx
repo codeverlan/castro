@@ -97,8 +97,11 @@ function Home() {
   }
 
   const handleOpenSettings = () => {
-    // Navigate to settings page (to be implemented)
-    console.log('Open settings')
+    navigate({ to: '/settings/s3' })
+  }
+
+  const handleManageS3Credentials = () => {
+    navigate({ to: '/settings/s3' })
   }
 
   const handleViewHistory = () => {
@@ -123,6 +126,7 @@ function Home() {
         onOpenSettings={handleOpenSettings}
         onViewHistory={handleViewHistory}
         onRefresh={handleRefresh}
+        onManageS3Credentials={handleManageS3Credentials}
       />
     </div>
   )

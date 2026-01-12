@@ -4,3 +4,4 @@
 export * from './noteTemplates';
 export * from './sessionHistory';
 export * from './gapPrompt';
+export * from './s3Credentials';

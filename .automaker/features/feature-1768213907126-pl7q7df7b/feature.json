@@ -1,0 +1,30 @@
+{
+  "category": "Uncategorized",
+  "description": "Test all buttons to validate they work",
+  "title": "Test all buttons for functionality validation",
+  "images": [],
+  "imagePaths": [],
+  "textFilePaths": [],
+  "skipTests": false,
+  "model": "opus",
+  "thinkingLevel": "none",
+  "reasoningEffort": "none",
+  "priority": 2,
+  "planningMode": "skip",
+  "requirePlanApproval": false,
+  "dependencies": [],
+  "workMode": "current",
+  "titleGenerating": false,
+  "status": "verified",
+  "id": "feature-1768213907126-pl7q7df7b",
+  "descriptionHistory": [
+    {
+      "description": "Test all buttons to validate they work",
+      "timestamp": "2026-01-12T10:31:47.161Z",
+      "source": "initial"
+    }
+  ],
+  "branchName": "master",
+  "startedAt": "2026-01-12T10:31:49.661Z",
+  "updatedAt": "2026-01-12T10:38:58.390Z"
+}

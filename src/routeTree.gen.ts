@@ -12,8 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TemplatesRouteImport } from './routes/templates'
 import { Route as HistoryRouteImport } from './routes/history'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SettingsS3RouteImport } from './routes/settings/s3'
 import { Route as ApiTemplatesIndexRouteImport } from './routes/api/templates/index'
 import { Route as ApiSessionsIndexRouteImport } from './routes/api/sessions/index'
+import { Route as ApiS3CredentialsIndexRouteImport } from './routes/api/s3-credentials/index'
 import { Route as ApiNotesIndexRouteImport } from './routes/api/notes/index'
 import { Route as ApiGapsIndexRouteImport } from './routes/api/gaps/index'
 import { Route as ApiAuditLogsIndexRouteImport } from './routes/api/audit-logs/index'
@@ -23,6 +25,9 @@ import { Route as ApiNotesExportRouteImport } from './routes/api/notes/export'
 import { Route as ApiNotesNoteIdRouteImport } from './routes/api/notes/$noteId'
 import { Route as ApiGapsBatchRouteImport } from './routes/api/gaps/batch'
 import { Route as ApiGapsIdRouteImport } from './routes/api/gaps/$id'
+import { Route as ApiS3CredentialsUpdateIdRouteImport } from './routes/api/s3-credentials/update/$id'
+import { Route as ApiS3CredentialsTestIdRouteImport } from './routes/api/s3-credentials/test/$id'
+import { Route as ApiS3CredentialsDeleteIdRouteImport } from './routes/api/s3-credentials/delete/$id'
 
 const TemplatesRoute = TemplatesRouteImport.update({
   id: '/templates',
@@ -39,6 +44,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SettingsS3Route = SettingsS3RouteImport.update({
+  id: '/settings/s3',
+  path: '/settings/s3',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiTemplatesIndexRoute = ApiTemplatesIndexRouteImport.update({
   id: '/api/templates/',
   path: '/api/templates/',
@@ -47,6 +57,11 @@ const ApiTemplatesIndexRoute = ApiTemplatesIndexRouteImport.update({
 const ApiSessionsIndexRoute = ApiSessionsIndexRouteImport.update({
   id: '/api/sessions/',
   path: '/api/sessions/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiS3CredentialsIndexRoute = ApiS3CredentialsIndexRouteImport.update({
+  id: '/api/s3-credentials/',
+  path: '/api/s3-credentials/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiNotesIndexRoute = ApiNotesIndexRouteImport.update({
@@ -94,11 +109,29 @@ const ApiGapsIdRoute = ApiGapsIdRouteImport.update({
   path: '/api/gaps/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiS3CredentialsUpdateIdRoute =
+  ApiS3CredentialsUpdateIdRouteImport.update({
+    id: '/api/s3-credentials/update/$id',
+    path: '/api/s3-credentials/update/$id',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiS3CredentialsTestIdRoute = ApiS3CredentialsTestIdRouteImport.update({
+  id: '/api/s3-credentials/test/$id',
+  path: '/api/s3-credentials/test/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiS3CredentialsDeleteIdRoute =
+  ApiS3CredentialsDeleteIdRouteImport.update({
+    id: '/api/s3-credentials/delete/$id',
+    path: '/api/s3-credentials/delete/$id',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/history': typeof HistoryRoute
   '/templates': typeof TemplatesRoute
+  '/settings/s3': typeof SettingsS3Route
   '/api/gaps/$id': typeof ApiGapsIdRoute
   '/api/gaps/batch': typeof ApiGapsBatchRoute
   '/api/notes/$noteId': typeof ApiNotesNoteIdRoute
@@ -108,13 +141,18 @@ export interface FileRoutesByFullPath {
   '/api/audit-logs': typeof ApiAuditLogsIndexRoute
   '/api/gaps': typeof ApiGapsIndexRoute
   '/api/notes': typeof ApiNotesIndexRoute
+  '/api/s3-credentials': typeof ApiS3CredentialsIndexRoute
   '/api/sessions': typeof ApiSessionsIndexRoute
   '/api/templates': typeof ApiTemplatesIndexRoute
+  '/api/s3-credentials/delete/$id': typeof ApiS3CredentialsDeleteIdRoute
+  '/api/s3-credentials/test/$id': typeof ApiS3CredentialsTestIdRoute
+  '/api/s3-credentials/update/$id': typeof ApiS3CredentialsUpdateIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/history': typeof HistoryRoute
   '/templates': typeof TemplatesRoute
+  '/settings/s3': typeof SettingsS3Route
   '/api/gaps/$id': typeof ApiGapsIdRoute
   '/api/gaps/batch': typeof ApiGapsBatchRoute
   '/api/notes/$noteId': typeof ApiNotesNoteIdRoute
@@ -124,14 +162,19 @@ export interface FileRoutesByTo {
   '/api/audit-logs': typeof ApiAuditLogsIndexRoute
   '/api/gaps': typeof ApiGapsIndexRoute
   '/api/notes': typeof ApiNotesIndexRoute
+  '/api/s3-credentials': typeof ApiS3CredentialsIndexRoute
   '/api/sessions': typeof ApiSessionsIndexRoute
   '/api/templates': typeof ApiTemplatesIndexRoute
+  '/api/s3-credentials/delete/$id': typeof ApiS3CredentialsDeleteIdRoute
+  '/api/s3-credentials/test/$id': typeof ApiS3CredentialsTestIdRoute
+  '/api/s3-credentials/update/$id': typeof ApiS3CredentialsUpdateIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/history': typeof HistoryRoute
   '/templates': typeof TemplatesRoute
+  '/settings/s3': typeof SettingsS3Route
   '/api/gaps/$id': typeof ApiGapsIdRoute
   '/api/gaps/batch': typeof ApiGapsBatchRoute
   '/api/notes/$noteId': typeof ApiNotesNoteIdRoute
@@ -141,8 +184,12 @@ export interface FileRoutesById {
   '/api/audit-logs/': typeof ApiAuditLogsIndexRoute
   '/api/gaps/': typeof ApiGapsIndexRoute
   '/api/notes/': typeof ApiNotesIndexRoute
+  '/api/s3-credentials/': typeof ApiS3CredentialsIndexRoute
   '/api/sessions/': typeof ApiSessionsIndexRoute
   '/api/templates/': typeof ApiTemplatesIndexRoute
+  '/api/s3-credentials/delete/$id': typeof ApiS3CredentialsDeleteIdRoute
+  '/api/s3-credentials/test/$id': typeof ApiS3CredentialsTestIdRoute
+  '/api/s3-credentials/update/$id': typeof ApiS3CredentialsUpdateIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -150,6 +197,7 @@ export interface FileRouteTypes {
     | '/'
     | '/history'
     | '/templates'
+    | '/settings/s3'
     | '/api/gaps/$id'
     | '/api/gaps/batch'
     | '/api/notes/$noteId'
@@ -159,13 +207,18 @@ export interface FileRouteTypes {
     | '/api/audit-logs'
     | '/api/gaps'
     | '/api/notes'
+    | '/api/s3-credentials'
     | '/api/sessions'
     | '/api/templates'
+    | '/api/s3-credentials/delete/$id'
+    | '/api/s3-credentials/test/$id'
+    | '/api/s3-credentials/update/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/history'
     | '/templates'
+    | '/settings/s3'
     | '/api/gaps/$id'
     | '/api/gaps/batch'
     | '/api/notes/$noteId'
@@ -175,13 +228,18 @@ export interface FileRouteTypes {
     | '/api/audit-logs'
     | '/api/gaps'
     | '/api/notes'
+    | '/api/s3-credentials'
     | '/api/sessions'
     | '/api/templates'
+    | '/api/s3-credentials/delete/$id'
+    | '/api/s3-credentials/test/$id'
+    | '/api/s3-credentials/update/$id'
   id:
     | '__root__'
     | '/'
     | '/history'
     | '/templates'
+    | '/settings/s3'
     | '/api/gaps/$id'
     | '/api/gaps/batch'
     | '/api/notes/$noteId'
@@ -191,14 +249,19 @@ export interface FileRouteTypes {
     | '/api/audit-logs/'
     | '/api/gaps/'
     | '/api/notes/'
+    | '/api/s3-credentials/'
     | '/api/sessions/'
     | '/api/templates/'
+    | '/api/s3-credentials/delete/$id'
+    | '/api/s3-credentials/test/$id'
+    | '/api/s3-credentials/update/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   HistoryRoute: typeof HistoryRoute
   TemplatesRoute: typeof TemplatesRoute
+  SettingsS3Route: typeof SettingsS3Route
   ApiGapsIdRoute: typeof ApiGapsIdRoute
   ApiGapsBatchRoute: typeof ApiGapsBatchRoute
   ApiNotesNoteIdRoute: typeof ApiNotesNoteIdRoute
@@ -208,8 +271,12 @@ export interface RootRouteChildren {
   ApiAuditLogsIndexRoute: typeof ApiAuditLogsIndexRoute
   ApiGapsIndexRoute: typeof ApiGapsIndexRoute
   ApiNotesIndexRoute: typeof ApiNotesIndexRoute
+  ApiS3CredentialsIndexRoute: typeof ApiS3CredentialsIndexRoute
   ApiSessionsIndexRoute: typeof ApiSessionsIndexRoute
   ApiTemplatesIndexRoute: typeof ApiTemplatesIndexRoute
+  ApiS3CredentialsDeleteIdRoute: typeof ApiS3CredentialsDeleteIdRoute
+  ApiS3CredentialsTestIdRoute: typeof ApiS3CredentialsTestIdRoute
+  ApiS3CredentialsUpdateIdRoute: typeof ApiS3CredentialsUpdateIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -235,6 +302,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/settings/s3': {
+      id: '/settings/s3'
+      path: '/settings/s3'
+      fullPath: '/settings/s3'
+      preLoaderRoute: typeof SettingsS3RouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/templates/': {
       id: '/api/templates/'
       path: '/api/templates'
@@ -247,6 +321,13 @@ declare module '@tanstack/react-router' {
       path: '/api/sessions'
       fullPath: '/api/sessions'
       preLoaderRoute: typeof ApiSessionsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/s3-credentials/': {
+      id: '/api/s3-credentials/'
+      path: '/api/s3-credentials'
+      fullPath: '/api/s3-credentials'
+      preLoaderRoute: typeof ApiS3CredentialsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/notes/': {
@@ -312,6 +393,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiGapsIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/s3-credentials/update/$id': {
+      id: '/api/s3-credentials/update/$id'
+      path: '/api/s3-credentials/update/$id'
+      fullPath: '/api/s3-credentials/update/$id'
+      preLoaderRoute: typeof ApiS3CredentialsUpdateIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/s3-credentials/test/$id': {
+      id: '/api/s3-credentials/test/$id'
+      path: '/api/s3-credentials/test/$id'
+      fullPath: '/api/s3-credentials/test/$id'
+      preLoaderRoute: typeof ApiS3CredentialsTestIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/s3-credentials/delete/$id': {
+      id: '/api/s3-credentials/delete/$id'
+      path: '/api/s3-credentials/delete/$id'
+      fullPath: '/api/s3-credentials/delete/$id'
+      preLoaderRoute: typeof ApiS3CredentialsDeleteIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -319,6 +421,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   HistoryRoute: HistoryRoute,
   TemplatesRoute: TemplatesRoute,
+  SettingsS3Route: SettingsS3Route,
   ApiGapsIdRoute: ApiGapsIdRoute,
   ApiGapsBatchRoute: ApiGapsBatchRoute,
   ApiNotesNoteIdRoute: ApiNotesNoteIdRoute,
@@ -328,8 +431,12 @@ const rootRouteChildren: RootRouteChildren = {
   ApiAuditLogsIndexRoute: ApiAuditLogsIndexRoute,
   ApiGapsIndexRoute: ApiGapsIndexRoute,
   ApiNotesIndexRoute: ApiNotesIndexRoute,
+  ApiS3CredentialsIndexRoute: ApiS3CredentialsIndexRoute,
   ApiSessionsIndexRoute: ApiSessionsIndexRoute,
   ApiTemplatesIndexRoute: ApiTemplatesIndexRoute,
+  ApiS3CredentialsDeleteIdRoute: ApiS3CredentialsDeleteIdRoute,
+  ApiS3CredentialsTestIdRoute: ApiS3CredentialsTestIdRoute,
+  ApiS3CredentialsUpdateIdRoute: ApiS3CredentialsUpdateIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -91,3 +91,14 @@ export {
   type ProcessingMetric,
   type NewProcessingMetric,
 } from './auditLogs';
+
+// S3 Credentials
+export {
+  // Tables
+  s3Credentials,
+  // Relations
+  s3CredentialsRelations,
+  // Types
+  type S3Credentials,
+  type NewS3Credentials,
+} from './s3Credentials';

@@ -16,6 +16,7 @@ export interface SessionDashboardProps extends React.HTMLAttributes<HTMLDivEleme
   onOpenSettings?: () => void
   onViewHistory?: () => void
   onRefresh?: () => void
+  onManageS3Credentials?: () => void
   isRefreshing?: boolean
 }
 
@@ -33,6 +34,7 @@ const SessionDashboard = React.forwardRef<HTMLDivElement, SessionDashboardProps>
       onOpenSettings,
       onViewHistory,
       onRefresh,
+      onManageS3Credentials,
       isRefreshing,
       ...props
     },
@@ -93,6 +95,7 @@ const SessionDashboard = React.forwardRef<HTMLDivElement, SessionDashboardProps>
             onOpenSettings={onOpenSettings}
             onViewHistory={onViewHistory}
             onRefresh={onRefresh}
+            onManageS3Credentials={onManageS3Credentials}
             isRefreshing={isRefreshing}
           />
         </div>

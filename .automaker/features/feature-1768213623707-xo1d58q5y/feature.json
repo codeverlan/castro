@@ -1,0 +1,30 @@
+{
+  "category": "Uncategorized",
+  "description": "Debug: On the note template screen. Edit templates ad create template buttons don't work.",
+  "title": "Fix note template edit and create buttons",
+  "images": [],
+  "imagePaths": [],
+  "textFilePaths": [],
+  "skipTests": false,
+  "model": "opus",
+  "thinkingLevel": "none",
+  "reasoningEffort": "none",
+  "branchName": "feature/master-1768213623526-rjcj",
+  "priority": 2,
+  "planningMode": "lite",
+  "requirePlanApproval": false,
+  "dependencies": [],
+  "workMode": "auto",
+  "titleGenerating": false,
+  "status": "verified",
+  "id": "feature-1768213623707-xo1d58q5y",
+  "descriptionHistory": [
+    {
+      "description": "Debug: On the note template screen. Edit templates ad create template buttons don't work.",
+      "timestamp": "2026-01-12T10:27:03.729Z",
+      "source": "initial"
+    }
+  ],
+  "startedAt": "2026-01-12T10:27:17.116Z",
+  "updatedAt": "2026-01-12T10:36:54.268Z"
+}

@@ -1,6 +1,13 @@
 import * as React from 'react';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { TemplateList, Template } from '~/components/templates';
+import { TemplateList, Template, TemplateEditor, TemplateEditorFormData } from '~/components/templates';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '~/components/ui/dialog';
 
 export const Route = createFileRoute('/templates')({
   component: TemplatesPage,
@@ -80,6 +87,9 @@ function TemplatesPage() {
   const navigate = useNavigate();
   const [templates, setTemplates] = React.useState<Template[]>(mockTemplates);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [isEditorOpen, setIsEditorOpen] = React.useState(false);
+  const [editingTemplate, setEditingTemplate] = React.useState<Template | null>(null);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   // Simulate loading state on mount
   React.useEffect(() => {
@@ -91,9 +101,9 @@ function TemplatesPage() {
   }, []);
 
   const handleEdit = (template: Template) => {
-    // In a real app, navigate to edit page or open edit modal
     console.log('Edit template:', template.id);
-    // navigate({ to: '/templates/$id/edit', params: { id: template.id } });
+    setEditingTemplate(template);
+    setIsEditorOpen(true);
   };
 
   const handleDelete = (template: Template) => {
@@ -121,9 +131,60 @@ function TemplatesPage() {
   };
 
   const handleCreate = () => {
-    // In a real app, navigate to create page or open create modal
     console.log('Create new template');
-    // navigate({ to: '/templates/new' });
+    setEditingTemplate(null);
+    setIsEditorOpen(true);
+  };
+
+  const handleEditorSubmit = (data: TemplateEditorFormData) => {
+    setIsSubmitting(true);
+
+    // Simulate API call
+    setTimeout(() => {
+      if (editingTemplate) {
+        // Update existing template
+        setTemplates((prev) =>
+          prev.map((t) =>
+            t.id === editingTemplate.id
+              ? {
+                  ...t,
+                  name: data.name,
+                  description: data.description || t.description,
+                  templateType: data.templateType || t.templateType,
+                  isDefault: data.isDefault,
+                  status: data.status,
+                  updatedAt: new Date(),
+                }
+              : t
+          )
+        );
+        console.log('Updated template:', editingTemplate.id, data);
+      } else {
+        // Create new template
+        const newTemplate: Template = {
+          id: `${Date.now()}`,
+          name: data.name,
+          description: data.description || 'Custom template',
+          templateType: data.templateType || 'Custom',
+          isDefault: data.isDefault,
+          status: data.status,
+          version: 1,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        };
+        setTemplates((prev) => [...prev, newTemplate]);
+        console.log('Created new template:', newTemplate);
+      }
+
+      setIsSubmitting(false);
+      setIsEditorOpen(false);
+      setEditingTemplate(null);
+    }, 500);
+  };
+
+  const handleEditorCancel = () => {
+    setIsEditorOpen(false);
+    setEditingTemplate(null);
   };
 
   return (
@@ -145,6 +206,39 @@ function TemplatesPage() {
         onDuplicate={handleDuplicate}
         onCreate={handleCreate}
       />
+
+      {/* Template Editor Dialog */}
+      <Dialog open={isEditorOpen} onOpenChange={setIsEditorOpen}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>
+              {editingTemplate ? `Edit: ${editingTemplate.name}` : 'Create New Template'}
+            </DialogTitle>
+            <DialogDescription>
+              {editingTemplate
+                ? 'Modify the template details and sections below.'
+                : 'Fill in the template details and add sections to create your custom template.'}
+            </DialogDescription>
+          </DialogHeader>
+          <TemplateEditor
+            initialData={
+              editingTemplate
+                ? {
+                    name: editingTemplate.name,
+                    description: editingTemplate.description,
+                    templateType: editingTemplate.templateType,
+                    isDefault: editingTemplate.isDefault,
+                    status: editingTemplate.status,
+                    sections: [],
+                  }
+                : undefined
+            }
+            onSubmit={handleEditorSubmit}
+            onCancel={handleEditorCancel}
+            isSubmitting={isSubmitting}
+          />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
