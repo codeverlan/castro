@@ -9,7 +9,8 @@ import {
   RefreshCw,
   Upload,
   History,
-  Database
+  Database,
+  Mic,
 } from "lucide-react"
 
 export interface QuickAction {
@@ -28,6 +29,7 @@ export interface QuickActionsProps extends React.HTMLAttributes<HTMLDivElement> 
   onViewHistory?: () => void
   onRefresh?: () => void
   onManageS3Credentials?: () => void
+  onRecordOrUpload?: () => void
   isRefreshing?: boolean
 }
 
@@ -41,12 +43,21 @@ const QuickActions = React.forwardRef<HTMLDivElement, QuickActionsProps>(
       onViewHistory,
       onRefresh,
       onManageS3Credentials,
+      onRecordOrUpload,
       isRefreshing,
       ...props
     },
     ref
   ) => {
     const actions: QuickAction[] = [
+      {
+        id: "record-upload",
+        label: "Record/Upload",
+        description: "Record dictation or upload audio",
+        icon: Mic,
+        onClick: () => onRecordOrUpload?.(),
+        variant: "default",
+      },
       {
         id: "watch-folder",
         label: "Watch Folder",

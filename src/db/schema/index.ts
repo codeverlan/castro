@@ -102,3 +102,63 @@ export {
   type S3Credentials,
   type NewS3Credentials,
 } from './s3Credentials';
+
+// Clients (IntakeQ Integration)
+export {
+  // Tables
+  clients,
+  intakeqFieldMappings,
+  // Types
+  type Client,
+  type NewClient,
+  type IntakeqFieldMapping,
+  type NewIntakeqFieldMapping,
+} from './clients';
+
+// Session Recordings (Browser/Upload Audio)
+export {
+  // Tables
+  sessionRecordings,
+  // Enums
+  recordingSourceEnum,
+  recordingStatusEnum,
+  // Relations
+  sessionRecordingsRelations,
+  // Types
+  type SessionRecording,
+  type NewSessionRecording,
+} from './sessionRecordings';
+
+// Processing Prompts (AI Transcription Processing)
+export {
+  // Tables
+  processingPrompts,
+  // Enums
+  promptTypeEnum,
+  // Relations
+  processingPromptsRelations,
+  // Types
+  type ProcessingPrompt,
+  type NewProcessingPrompt,
+} from './processingPrompts';
+
+// IntakeQ Note Types (Field Definitions)
+export {
+  // Tables
+  intakeqNoteTypes,
+  // Relations
+  intakeqNoteTypesRelations,
+  // Types
+  type IntakeQNoteType,
+  type NewIntakeQNoteType,
+  type IntakeQFieldDefinition,
+} from './intakeqNoteTypes';
+
+// IntakeQ Settings (API Configuration)
+export {
+  // Tables
+  intakeqSettings,
+  // Types
+  type IntakeQSettings,
+  type NewIntakeQSettings,
+} from './intakeqSettings';

@@ -1,0 +1,32 @@
+{
+  "sessionId": "test-session-001",
+  "client": {
+    "name": "Test Client",
+    "intakeqId": "12345"
+  },
+  "dateOfService": "2026-01-13",
+  "noteType": "Individual Progress Note",
+  "sections": [
+    {
+      "name": "Subjective",
+      "content": "Client reported feeling anxious about upcoming work deadline. States sleep has been disrupted and appetite decreased. Reports using coping skills learned in previous sessions with some success.",
+      "confidence": 92
+    },
+    {
+      "name": "Objective",
+      "content": "Client appeared well-groomed with appropriate attire. Speech was normal rate and rhythm. Affect was anxious but congruent with reported mood. Eye contact was appropriate. No psychomotor agitation observed.",
+      "confidence": 88
+    },
+    {
+      "name": "Assessment",
+      "content": "Generalized Anxiety Disorder - mild improvement noted since last session. Client is engaging well in treatment and showing insight into anxiety patterns. Risk assessment: Low risk for self-harm.",
+      "confidence": 75
+    },
+    {
+      "name": "Plan",
+      "content": "1. Continue weekly individual therapy sessions\n2. Practice progressive muscle relaxation daily\n3. Complete thought record worksheet before next session\n4. Consider referral for medication evaluation if symptoms persist",
+      "confidence": 95
+    }
+  ],
+  "timestamp": "2026-01-13T12:00:00Z"
+}

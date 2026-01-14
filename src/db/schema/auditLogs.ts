@@ -45,6 +45,18 @@ export const auditActionEnum = pgEnum('audit_action', [
   'configuration_changed',
   'file_watcher_started',
   'file_watcher_stopped',
+  // Credential actions (S3)
+  'credential_s3_list',
+  'credential_s3_read',
+  'credential_s3_create',
+  'credential_s3_update',
+  'credential_s3_delete',
+  // IntakeQ configuration actions
+  'config_intakeq_read',
+  'config_intakeq_create',
+  'config_intakeq_update',
+  'config_intakeq_delete',
+  'config_intakeq_test',
 ]);
 
 // Enum for audit log severity

@@ -9,11 +9,12 @@ export interface SessionListProps extends React.HTMLAttributes<HTMLDivElement> {
   onViewDetails?: (session: SessionData) => void
   onRetry?: (session: SessionData) => void
   onCopyNote?: (session: SessionData) => void
+  onSendToIntakeQ?: (session: SessionData) => void
 }
 
 const SessionList = React.forwardRef<HTMLDivElement, SessionListProps>(
   (
-    { className, sessions, isLoading, onViewDetails, onRetry, onCopyNote, ...props },
+    { className, sessions, isLoading, onViewDetails, onRetry, onCopyNote, onSendToIntakeQ, ...props },
     ref
   ) => {
     if (isLoading) {
@@ -67,6 +68,7 @@ const SessionList = React.forwardRef<HTMLDivElement, SessionListProps>(
             onViewDetails={onViewDetails}
             onRetry={onRetry}
             onCopyNote={onCopyNote}
+            onSendToIntakeQ={onSendToIntakeQ}
           />
         ))}
       </div>

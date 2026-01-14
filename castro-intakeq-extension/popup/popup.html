@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Castro IntakeQ Bridge</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Castro Bridge</h1>
+      <span class="version">v1.0.0</span>
+    </header>
+
+    <!-- No Note State -->
+    <div id="no-note" class="state">
+      <div class="icon">📋</div>
+      <p>No note loaded</p>
+      <button id="paste-btn" class="btn primary">
+        Paste from Castro
+      </button>
+      <p class="hint">Copy a note in Castro, then click above</p>
+    </div>
+
+    <!-- Note Ready State -->
+    <div id="note-ready" class="state hidden">
+      <div class="note-info">
+        <div class="label">Client</div>
+        <div id="client-name" class="value">-</div>
+
+        <div class="label">Date of Service</div>
+        <div id="dos" class="value">-</div>
+
+        <div class="label">Note Type</div>
+        <div id="note-type" class="value">-</div>
+
+        <div class="label">Sections</div>
+        <div id="sections" class="value">-</div>
+      </div>
+
+      <div class="instructions">
+        <p>1. Open IntakeQ and navigate to this client's note</p>
+        <p>2. Click "Fill Fields" when on the correct page</p>
+      </div>
+
+      <div class="actions">
+        <button id="clear-btn" class="btn secondary">Clear</button>
+      </div>
+    </div>
+
+    <!-- Error State -->
+    <div id="error" class="state hidden">
+      <div class="icon error">⚠️</div>
+      <p id="error-message">Error message</p>
+      <button id="retry-btn" class="btn secondary">Try Again</button>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <a href="#" id="mappings-link">Field Mappings</a>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

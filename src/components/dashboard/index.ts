@@ -16,3 +16,6 @@ export type { ProcessingStatsProps, ProcessingStatsData } from "./ProcessingStat
 
 export { SessionDashboard } from "./SessionDashboard"
 export type { SessionDashboardProps } from "./SessionDashboard"
+
+export { ScheduleView } from "./ScheduleView"
+export type { ScheduleViewProps } from "./ScheduleView"

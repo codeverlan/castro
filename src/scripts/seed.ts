@@ -12,7 +12,7 @@
  */
 
 import 'dotenv/config';
-import { db, closeConnection, noteTemplates, templateSections, templateFields } from '~/db';
+import { db, closeConnection, noteTemplates, templateSections, templateFields, processingPrompts } from '~/db';
 import { eq } from 'drizzle-orm';
 
 // Type definitions for template structure
@@ -646,6 +646,159 @@ const birpTemplate: TemplateDefinition = {
 // All default templates
 const defaultTemplates: TemplateDefinition[] = [soapTemplate, dapTemplate, birpTemplate];
 
+// ============================================
+// Processing Prompts Definitions
+// ============================================
+
+interface PromptDefinition {
+  name: string;
+  description: string;
+  promptType: 'transform' | 'extract' | 'combined';
+  systemPrompt: string;
+  userPromptTemplate: string;
+  outputFormat: 'markdown' | 'json' | 'plain';
+  isDefault: boolean;
+}
+
+// SOAP Transform Prompt
+const soapTransformPrompt: PromptDefinition = {
+  name: 'SOAP Clinical Transform',
+  description: 'Transform raw therapy dictation into clinical SOAP format with professional language.',
+  promptType: 'transform',
+  systemPrompt: `You are a clinical documentation assistant specializing in mental health progress notes. Your role is to transform raw therapy session dictation into professional SOAP format documentation.
+
+Guidelines:
+- Use third-person clinical perspective (e.g., "Client reported..." not "I told them...")
+- Convert casual speech to formal clinical terminology
+- Preserve clinical accuracy and specific details mentioned
+- Maintain objective, professional tone throughout
+- Include relevant clinical observations and assessments
+- Use standard mental health terminology appropriately`,
+  userPromptTemplate: `Transform the following raw therapy dictation into a structured SOAP note:
+
+**Raw Dictation:**
+{{transcription}}
+
+**Instructions:**
+1. **Subjective**: Extract and document the client's self-reported experiences, quotes, feelings, and concerns. Include chief complaint and relevant history.
+
+2. **Objective**: Document therapist observations including appearance, behavior, affect, speech patterns, and mental status observations.
+
+3. **Assessment**: Provide clinical interpretation, diagnostic impressions, progress toward goals, and risk assessment.
+
+4. **Plan**: Outline next steps, treatment interventions, homework assignments, and follow-up scheduling.
+
+Format the output as a well-structured clinical note with clear section headers.`,
+  outputFormat: 'markdown',
+  isDefault: true,
+};
+
+// General Clinical Transform Prompt
+const generalClinicalPrompt: PromptDefinition = {
+  name: 'General Clinical Transform',
+  description: 'Rewrite dictation in professional clinical language without specific formatting.',
+  promptType: 'transform',
+  systemPrompt: `You are a clinical documentation assistant. Your role is to transform raw dictation into professional clinical documentation while preserving all important details.
+
+Guidelines:
+- Use third-person clinical perspective
+- Convert casual speech to formal documentation language
+- Preserve clinical accuracy and specific details
+- Add appropriate clinical terminology where relevant
+- Maintain an objective, professional tone
+- Keep the narrative flow while improving clarity`,
+  userPromptTemplate: `Rewrite the following dictation in professional clinical language:
+
+**Raw Dictation:**
+{{transcription}}
+
+**Instructions:**
+- Transform into clear, professional clinical documentation
+- Preserve all clinically relevant details
+- Use appropriate mental health terminology
+- Maintain chronological flow of the session
+- Format for easy reading and integration into clinical notes`,
+  outputFormat: 'markdown',
+  isDefault: false,
+};
+
+// DAP Transform Prompt
+const dapTransformPrompt: PromptDefinition = {
+  name: 'DAP Clinical Transform',
+  description: 'Transform raw therapy dictation into concise DAP format documentation.',
+  promptType: 'transform',
+  systemPrompt: `You are a clinical documentation assistant specializing in mental health progress notes. Your role is to transform raw therapy session dictation into professional DAP (Data, Assessment, Plan) format.
+
+Guidelines:
+- Use third-person clinical perspective
+- Be concise while preserving essential information
+- Combine subjective and objective observations in the Data section
+- Provide clear clinical assessment
+- Outline actionable treatment plans`,
+  userPromptTemplate: `Transform the following raw therapy dictation into a DAP note:
+
+**Raw Dictation:**
+{{transcription}}
+
+**Instructions:**
+1. **Data**: Combine factual information from the session including:
+   - Client's reported experiences and statements
+   - Therapist's observations (appearance, behavior, affect)
+   - Key topics discussed and interventions used
+
+2. **Assessment**: Provide clinical analysis including:
+   - Clinical impressions and interpretations
+   - Progress toward treatment goals
+   - Current symptom status and risk level
+
+3. **Plan**: Document treatment direction including:
+   - Continued treatment focus
+   - Between-session assignments
+   - Follow-up scheduling
+
+Format as a concise, professional clinical note.`,
+  outputFormat: 'markdown',
+  isDefault: false,
+};
+
+// Field Extraction Prompt
+const fieldExtractionPrompt: PromptDefinition = {
+  name: 'IntakeQ Field Extractor',
+  description: 'Extract specific field values from clinical content for IntakeQ form mapping.',
+  promptType: 'extract',
+  systemPrompt: `You are a clinical data extraction assistant. Your role is to extract specific field values from clinical documentation to populate IntakeQ forms.
+
+Guidelines:
+- Extract only information explicitly present in the text
+- Use appropriate clinical terminology
+- Return null for fields with no matching information
+- Preserve exact quotes where appropriate
+- Be concise and accurate in extracted values`,
+  userPromptTemplate: `Extract the following fields from this clinical content:
+
+**Clinical Content:**
+{{content}}
+
+**Fields to Extract:**
+{{fields}}
+
+**Instructions:**
+- Extract values for each specified field
+- Return the data as a JSON object with field IDs as keys
+- Use null for fields where no information is available
+- Keep extracted values concise and clinically accurate`,
+  outputFormat: 'json',
+  isDefault: true,
+};
+
+// All default prompts
+const defaultPrompts: PromptDefinition[] = [
+  soapTransformPrompt,
+  generalClinicalPrompt,
+  dapTransformPrompt,
+  fieldExtractionPrompt,
+];
+
 /**
  * Seed a single template with its sections and fields
  */
@@ -704,13 +857,50 @@ async function seedTemplate(template: TemplateDefinition): Promise<string> {
 }
 
 /**
+ * Seed a single prompt
+ */
+async function seedPrompt(prompt: PromptDefinition): Promise<string> {
+  console.log(`  Seeding prompt: ${prompt.name}...`);
+
+  const [insertedPrompt] = await db
+    .insert(processingPrompts)
+    .values({
+      name: prompt.name,
+      description: prompt.description,
+      promptType: prompt.promptType,
+      systemPrompt: prompt.systemPrompt,
+      userPromptTemplate: prompt.userPromptTemplate,
+      outputFormat: prompt.outputFormat,
+      isDefault: prompt.isDefault,
+      isActive: true,
+      version: 1,
+    })
+    .returning();
+
+  return insertedPrompt.id;
+}
+
+/**
  * Check if default templates already exist
  */
-async function checkExistingDefaults(): Promise<boolean> {
+async function checkExistingDefaultTemplates(): Promise<boolean> {
   const existing = await db
     .select({ id: noteTemplates.id })
     .from(noteTemplates)
     .where(eq(noteTemplates.isDefault, true))
+    .limit(1);
+
+  return existing.length > 0;
+}
+
+/**
+ * Check if default prompts already exist
+ */
+async function checkExistingDefaultPrompts(): Promise<boolean> {
+  const existing = await db
+    .select({ id: processingPrompts.id })
+    .from(processingPrompts)
+    .where(eq(processingPrompts.isDefault, true))
     .limit(1);
 
   return existing.length > 0;
@@ -723,31 +913,53 @@ async function seed(): Promise<void> {
   console.log('Starting database seed...\n');
 
   try {
-    // Check if defaults already exist
-    const hasDefaults = await checkExistingDefaults();
+    // Seed Templates
+    const hasDefaultTemplates = await checkExistingDefaultTemplates();
 
-    if (hasDefaults) {
-      console.log('Default templates already exist. Skipping seed.');
-      console.log('To re-seed, first delete existing default templates.\n');
-      return;
+    if (hasDefaultTemplates) {
+      console.log('Default templates already exist. Skipping template seed.');
+    } else {
+      console.log('Seeding default clinical note templates...\n');
+
+      const seededTemplateIds: string[] = [];
+
+      for (const template of defaultTemplates) {
+        const id = await seedTemplate(template);
+        seededTemplateIds.push(id);
+        console.log(`  Created template: ${template.name} (${id})\n`);
+      }
+
+      console.log(`Created ${seededTemplateIds.length} default templates:`);
+      defaultTemplates.forEach((t, i) => {
+        console.log(`  - ${t.name} (${t.templateType}): ${seededTemplateIds[i]}`);
+      });
+      console.log('');
     }
 
-    console.log('Seeding default clinical note templates...\n');
+    // Seed Prompts
+    const hasDefaultPrompts = await checkExistingDefaultPrompts();
 
-    const seededIds: string[] = [];
+    if (hasDefaultPrompts) {
+      console.log('Default prompts already exist. Skipping prompt seed.');
+    } else {
+      console.log('Seeding default AI processing prompts...\n');
 
-    for (const template of defaultTemplates) {
-      const id = await seedTemplate(template);
-      seededIds.push(id);
-      console.log(`  Created template: ${template.name} (${id})\n`);
+      const seededPromptIds: string[] = [];
+
+      for (const prompt of defaultPrompts) {
+        const id = await seedPrompt(prompt);
+        seededPromptIds.push(id);
+        console.log(`  Created prompt: ${prompt.name} (${id})\n`);
+      }
+
+      console.log(`Created ${seededPromptIds.length} default prompts:`);
+      defaultPrompts.forEach((p, i) => {
+        console.log(`  - ${p.name} (${p.promptType}): ${seededPromptIds[i]}`);
+      });
+      console.log('');
     }
 
     console.log('Seed completed successfully!');
-    console.log(`Created ${seededIds.length} default templates:`);
-    defaultTemplates.forEach((t, i) => {
-      console.log(`  - ${t.name} (${t.templateType}): ${seededIds[i]}`);
-    });
-    console.log('');
   } catch (error) {
     console.error('Seed failed:', error);
     throw error;

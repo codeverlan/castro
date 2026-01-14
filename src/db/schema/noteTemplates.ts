@@ -10,6 +10,8 @@ import {
   pgEnum,
 } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
+import { processingPrompts } from './processingPrompts';
+import { intakeqNoteTypes } from './intakeqNoteTypes';
 
 // Enum for template section field types
 export const fieldTypeEnum = pgEnum('field_type', [
@@ -45,6 +47,17 @@ export const noteTemplates = pgTable('note_templates', {
   version: integer('version').default(1).notNull(),
   // Reference to parent template for versioning
   parentTemplateId: uuid('parent_template_id'),
+
+  // AI Processing Prompt associations
+  defaultTransformPromptId: uuid('default_transform_prompt_id')
+    .references(() => processingPrompts.id, { onDelete: 'set null' }),
+  defaultExtractPromptId: uuid('default_extract_prompt_id')
+    .references(() => processingPrompts.id, { onDelete: 'set null' }),
+
+  // IntakeQ Note Type association
+  intakeqNoteTypeId: uuid('intakeq_note_type_id')
+    .references(() => intakeqNoteTypes.id, { onDelete: 'set null' }),
+
   // Timestamps
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
@@ -110,6 +123,22 @@ export const noteTemplatesRelations = relations(noteTemplates, ({ many, one }) =
   parentTemplate: one(noteTemplates, {
     fields: [noteTemplates.parentTemplateId],
     references: [noteTemplates.id],
+  }),
+  // AI Processing Prompt relations
+  defaultTransformPrompt: one(processingPrompts, {
+    fields: [noteTemplates.defaultTransformPromptId],
+    references: [processingPrompts.id],
+    relationName: 'templateTransformPrompt',
+  }),
+  defaultExtractPrompt: one(processingPrompts, {
+    fields: [noteTemplates.defaultExtractPromptId],
+    references: [processingPrompts.id],
+    relationName: 'templateExtractPrompt',
+  }),
+  // IntakeQ Note Type relation
+  intakeqNoteType: one(intakeqNoteTypes, {
+    fields: [noteTemplates.intakeqNoteTypeId],
+    references: [intakeqNoteTypes.id],
   }),
 }));
 

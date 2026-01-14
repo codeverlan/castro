@@ -14,7 +14,8 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import { Plus, Save } from 'lucide-react';
+import { Plus, Save, Sparkles } from 'lucide-react';
+import type { ProcessingPrompt, IntakeQNoteType } from '~/db/schema';
 
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
@@ -84,6 +85,10 @@ export interface TemplateEditorFormData {
   isDefault: boolean;
   status: TemplateStatus;
   sections: EditorSection[];
+  // AI Processing configuration
+  defaultTransformPromptId?: string | null;
+  defaultExtractPromptId?: string | null;
+  intakeqNoteTypeId?: string | null;
 }
 
 // =============================================================================
@@ -95,6 +100,9 @@ export interface TemplateEditorProps {
   onSubmit: (data: TemplateEditorFormData) => void;
   onCancel?: () => void;
   isSubmitting?: boolean;
+  // AI Processing options
+  prompts?: ProcessingPrompt[];
+  noteTypes?: IntakeQNoteType[];
 }
 
 // =============================================================================
@@ -138,6 +146,8 @@ export function TemplateEditor({
   onSubmit,
   onCancel,
   isSubmitting = false,
+  prompts = [],
+  noteTypes = [],
 }: TemplateEditorProps) {
   const form = useForm<TemplateEditorFormData>({
     defaultValues: {
@@ -147,9 +157,26 @@ export function TemplateEditor({
       isDefault: false,
       status: 'draft',
       sections: [],
+      defaultTransformPromptId: null,
+      defaultExtractPromptId: null,
+      intakeqNoteTypeId: null,
       ...initialData,
     },
   });
+
+  // Filter prompts by type
+  const transformPrompts = React.useMemo(
+    () => prompts.filter((p) => p.isActive && (p.promptType === 'transform' || p.promptType === 'combined')),
+    [prompts]
+  );
+  const extractPrompts = React.useMemo(
+    () => prompts.filter((p) => p.isActive && (p.promptType === 'extract' || p.promptType === 'combined')),
+    [prompts]
+  );
+  const activeNoteTypes = React.useMemo(
+    () => noteTypes.filter((nt) => nt.isActive),
+    [noteTypes]
+  );
 
   const { fields: sections, append, remove, move } = useFieldArray({
     control: form.control,
@@ -339,6 +366,131 @@ export function TemplateEditor({
             />
           </CardContent>
         </Card>
+
+        {/* AI Processing Configuration */}
+        {(prompts.length > 0 || noteTypes.length > 0) && (
+          <Card>
+            <CardHeader>
+              <div className="flex items-center gap-2">
+                <Sparkles className="h-5 w-5 text-primary" />
+                <CardTitle>AI Processing</CardTitle>
+              </div>
+              <CardDescription>
+                Configure how AI processes transcriptions for notes using this template.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {prompts.length > 0 && (
+                <>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* Transform Prompt */}
+                    <FormField
+                      control={form.control}
+                      name="defaultTransformPromptId"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Transform Prompt</FormLabel>
+                          <Select
+                            onValueChange={(val) => field.onChange(val === '__none__' ? null : val)}
+                            value={field.value || '__none__'}
+                          >
+                            <FormControl>
+                              <SelectTrigger data-testid="transform-prompt-select">
+                                <SelectValue placeholder="Select transform prompt..." />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="__none__">Use system default</SelectItem>
+                              {transformPrompts.map((prompt) => (
+                                <SelectItem key={prompt.id} value={prompt.id}>
+                                  {prompt.name}
+                                  {prompt.isDefault && ' (default)'}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormDescription>
+                            Converts raw dictation to clinical format
+                          </FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    {/* Extract Prompt */}
+                    <FormField
+                      control={form.control}
+                      name="defaultExtractPromptId"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Extract Prompt</FormLabel>
+                          <Select
+                            onValueChange={(val) => field.onChange(val === '__none__' ? null : val)}
+                            value={field.value || '__none__'}
+                          >
+                            <FormControl>
+                              <SelectTrigger data-testid="extract-prompt-select">
+                                <SelectValue placeholder="Select extract prompt..." />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="__none__">Use system default</SelectItem>
+                              {extractPrompts.map((prompt) => (
+                                <SelectItem key={prompt.id} value={prompt.id}>
+                                  {prompt.name}
+                                  {prompt.isDefault && ' (default)'}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormDescription>
+                            Extracts field values from processed content
+                          </FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </>
+              )}
+
+              {noteTypes.length > 0 && (
+                <FormField
+                  control={form.control}
+                  name="intakeqNoteTypeId"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>IntakeQ Note Type</FormLabel>
+                      <Select
+                        onValueChange={(val) => field.onChange(val === '__none__' ? null : val)}
+                        value={field.value || '__none__'}
+                      >
+                        <FormControl>
+                          <SelectTrigger data-testid="intakeq-note-type-select">
+                            <SelectValue placeholder="Select IntakeQ note type..." />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="__none__">None</SelectItem>
+                          {activeNoteTypes.map((noteType) => (
+                            <SelectItem key={noteType.id} value={noteType.id}>
+                              {noteType.name}
+                              {noteType.fields && ` (${noteType.fields.length} fields)`}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormDescription>
+                        Maps extracted content to IntakeQ form fields
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
+            </CardContent>
+          </Card>
+        )}
 
         {/* Sections */}
         <Card>

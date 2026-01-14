@@ -4,6 +4,7 @@
  * maps content to appropriate template sections using local LLM.
  */
 
+import { eq } from 'drizzle-orm';
 import { OllamaService, ollamaService } from '../ollama';
 import type { OllamaRequestOptions } from '../ollama';
 import {
@@ -22,6 +23,8 @@ import type {
   MappingMetrics,
   MappingSectionInfo,
 } from './types';
+import { db } from '~/db';
+import { processingPrompts, type ProcessingPrompt } from '~/db/schema';
 
 // Default clinical context for error cases
 const EMPTY_CLINICAL_CONTEXT: ClinicalContext = {
@@ -47,9 +50,29 @@ const DEFAULT_OPTIONS: Required<ContentMappingEngineOptions> = {
   maxRetries: 2,
 };
 
+// Cache for loaded prompts to avoid repeated DB queries
+type PromptCache = Map<string, ProcessingPrompt>;
+
+/**
+ * Interpolate variables in a prompt template
+ * Replaces {{variable}} placeholders with actual values
+ */
+function interpolatePromptTemplate(
+  template: string,
+  variables: Record<string, string | undefined>
+): string {
+  let result = template;
+  for (const [key, value] of Object.entries(variables)) {
+    const placeholder = new RegExp(`\\{\\{${key}\\}\\}`, 'g');
+    result = result.replace(placeholder, value || '');
+  }
+  return result;
+}
+
 export class ContentMappingEngine {
   private ollamaService: OllamaService;
   private options: Required<ContentMappingEngineOptions>;
+  private promptCache: PromptCache = new Map();
 
   constructor(
     service?: OllamaService,
@@ -57,6 +80,70 @@ export class ContentMappingEngine {
   ) {
     this.ollamaService = service || ollamaService;
     this.options = { ...DEFAULT_OPTIONS, ...options };
+  }
+
+  /**
+   * Load a processing prompt from database
+   * Uses cache to avoid repeated queries
+   */
+  private async loadPrompt(promptId: string): Promise<ProcessingPrompt | null> {
+    // Check cache first
+    if (this.promptCache.has(promptId)) {
+      return this.promptCache.get(promptId) || null;
+    }
+
+    try {
+      const [prompt] = await db
+        .select()
+        .from(processingPrompts)
+        .where(eq(processingPrompts.id, promptId))
+        .limit(1);
+
+      if (prompt && prompt.isActive) {
+        this.promptCache.set(promptId, prompt);
+        return prompt;
+      }
+      return null;
+    } catch (error) {
+      console.warn(`Failed to load prompt ${promptId}:`, error);
+      return null;
+    }
+  }
+
+  /**
+   * Load default prompt by type
+   */
+  private async loadDefaultPrompt(
+    promptType: 'transform' | 'extract'
+  ): Promise<ProcessingPrompt | null> {
+    try {
+      const results = await db
+        .select()
+        .from(processingPrompts)
+        .where(eq(processingPrompts.isDefault, true))
+        .limit(10);
+
+      // Filter by type and active in JS since multiple where clauses
+      const prompt = results.find(
+        p => (p.promptType === promptType || p.promptType === 'combined') && p.isActive
+      );
+
+      if (prompt) {
+        this.promptCache.set(prompt.id, prompt);
+        return prompt;
+      }
+      return null;
+    } catch (error) {
+      console.warn(`Failed to load default ${promptType} prompt:`, error);
+      return null;
+    }
+  }
+
+  /**
+   * Clear the prompt cache (useful for testing or after prompt updates)
+   */
+  clearPromptCache(): void {
+    this.promptCache.clear();
   }
 
   /**
@@ -70,6 +157,17 @@ export class ContentMappingEngine {
     const startTime = Date.now();
     let llmCallCount = 0;
     const metrics: Partial<MappingMetrics> = {};
+
+    // Load stored prompts if IDs provided
+    let transformPrompt: ProcessingPrompt | null = null;
+    let extractPrompt: ProcessingPrompt | null = null;
+
+    if (request.transformPromptId) {
+      transformPrompt = await this.loadPrompt(request.transformPromptId);
+    }
+    if (request.extractPromptId) {
+      extractPrompt = await this.loadPrompt(request.extractPromptId);
+    }
 
     try {
       // Step 1: Extract clinical context from transcription
@@ -98,7 +196,12 @@ export class ContentMappingEngine {
       let rewriteTimeMs = 0;
       if (mergedOptions.enableRewriting) {
         const rewriteStart = Date.now();
-        mappedSections = await this.rewriteSections(mappedSections, mergedOptions);
+        mappedSections = await this.rewriteSections(
+          mappedSections,
+          mergedOptions,
+          request.transcription,
+          transformPrompt
+        );
         llmCallCount++;
         rewriteTimeMs = Date.now() - rewriteStart;
       }
@@ -336,10 +439,13 @@ export class ContentMappingEngine {
 
   /**
    * Professionally rewrite mapped content
+   * Can use stored transform prompt if provided
    */
   private async rewriteSections(
     mappedSections: MappedSectionContent[],
-    options: Required<ContentMappingEngineOptions>
+    options: Required<ContentMappingEngineOptions>,
+    originalTranscription?: string,
+    storedPrompt?: ProcessingPrompt | null
   ): Promise<MappedSectionContent[]> {
     // Filter sections that have content to rewrite
     const sectionsToRewrite = mappedSections.filter(s => s.rawContent?.trim());
@@ -353,20 +459,41 @@ export class ContentMappingEngine {
       temperature: options.temperature,
     };
 
-    // Prepare batch rewrite request
-    const rewriteInput = sectionsToRewrite.map(s => ({
-      id: s.sectionId,
-      name: s.sectionName,
-      rawContent: s.rawContent,
-      description: null as string | null, // We don't have this in MappedSectionContent
-      aiHints: null as string | null,
-    }));
+    let systemPrompt: string;
+    let userPrompt: string;
 
-    const userPrompt = rewritingPrompts.generateBatchRewritePrompt(rewriteInput);
+    if (storedPrompt) {
+      // Use the stored transform prompt
+      systemPrompt = storedPrompt.systemPrompt;
+
+      // Prepare content for interpolation
+      const rawContentCombined = sectionsToRewrite
+        .map(s => `### ${s.sectionName}\n${s.rawContent}`)
+        .join('\n\n');
+
+      userPrompt = interpolatePromptTemplate(storedPrompt.userPromptTemplate, {
+        transcription: originalTranscription || rawContentCombined,
+        content: rawContentCombined,
+      });
+    } else {
+      // Use default hardcoded prompts
+      systemPrompt = rewritingPrompts.system;
+
+      // Prepare batch rewrite request
+      const rewriteInput = sectionsToRewrite.map(s => ({
+        id: s.sectionId,
+        name: s.sectionName,
+        rawContent: s.rawContent,
+        description: null as string | null,
+        aiHints: null as string | null,
+      }));
+
+      userPrompt = rewritingPrompts.generateBatchRewritePrompt(rewriteInput);
+    }
 
     const response = await this.ollamaService.generate(
       userPrompt,
-      rewritingPrompts.system,
+      systemPrompt,
       llmOptions
     );
 

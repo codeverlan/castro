@@ -73,7 +73,13 @@ export const s3Credentials = pgTable('s3_credentials', {
 // Relations
 // -----------------------------------------------------------------------------
 
-export const s3CredentialsRelations = relations(s3Credentials, () => ({}));
+// Note: Import sessionRecordings in the relation function to avoid circular dependency
+export const s3CredentialsRelations = relations(s3Credentials, ({ many }) => ({
+  recordings: many(sessionRecordings),
+}));
+
+// Import sessionRecordings for relation (placed here to avoid circular imports at module level)
+import { sessionRecordings } from './sessionRecordings';
 
 // -----------------------------------------------------------------------------
 // Type Exports

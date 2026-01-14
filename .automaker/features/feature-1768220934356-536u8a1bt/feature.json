@@ -1,0 +1,30 @@
+{
+  "category": "API",
+  "description": "I'll analyze the `/resources` directory and its contents to understand the API documentation, then help you brainstorm enhancements.",
+  "title": "I need the actual feature description to generate a title. The text you provided describes a task or activity, but I need to know what specific feature or enhancement you're creating a title for.\n\nCould you provide the feature description? For example:\n- \"Add real-time API documentation updates\"\n- \"Create interactive resource explorer for /resources directory\"\n- \"Implement automatic API doc generation from code comments\"\n\nOnce you share the feature description, I'll generate a concise 5-10 word title for it.",
+  "images": [],
+  "imagePaths": [],
+  "textFilePaths": [],
+  "skipTests": true,
+  "model": "opencode/glm-4.7-free",
+  "thinkingLevel": "none",
+  "reasoningEffort": "none",
+  "priority": 2,
+  "planningMode": "skip",
+  "requirePlanApproval": false,
+  "dependencies": [],
+  "workMode": "current",
+  "titleGenerating": false,
+  "status": "waiting_approval",
+  "id": "feature-1768220934356-536u8a1bt",
+  "descriptionHistory": [
+    {
+      "description": "I'll analyze the `/resources` directory and its contents to understand the API documentation, then help you brainstorm enhancements.",
+      "timestamp": "2026-01-12T12:28:54.485Z",
+      "source": "initial"
+    }
+  ],
+  "startedAt": "2026-01-12T12:28:54.531Z",
+  "updatedAt": "2026-01-12T12:30:46.710Z",
+  "justFinishedAt": "2026-01-12T12:30:46.710Z"
+}

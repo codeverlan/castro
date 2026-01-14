@@ -61,6 +61,10 @@ export interface ContentMappingEngineRequest {
     sessionType?: string;
     duration?: number;
   };
+  // Optional: Use stored prompt for transform step
+  transformPromptId?: string;
+  // Optional: Use stored prompt for extract step
+  extractPromptId?: string;
 }
 
 // Mapped content for a single section

@@ -8,6 +8,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from '~/components/ui/dialog';
+import { PageContainer, PageHeader } from '~/navigation';
+import type { ProcessingPrompt, IntakeQNoteType } from '~/db/schema';
 
 export const Route = createFileRoute('/templates')({
   component: TemplatesPage,
@@ -90,6 +92,37 @@ function TemplatesPage() {
   const [isEditorOpen, setIsEditorOpen] = React.useState(false);
   const [editingTemplate, setEditingTemplate] = React.useState<Template | null>(null);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
+
+  // AI Processing options for template editor
+  const [prompts, setPrompts] = React.useState<ProcessingPrompt[]>([]);
+  const [noteTypes, setNoteTypes] = React.useState<IntakeQNoteType[]>([]);
+
+  // Fetch AI processing options
+  React.useEffect(() => {
+    const fetchAIOptions = async () => {
+      try {
+        // Fetch prompts and note types in parallel
+        const [promptsRes, noteTypesRes] = await Promise.all([
+          fetch('/api/prompts?isActive=true'),
+          fetch('/api/intakeq/note-types?isActive=true'),
+        ]);
+
+        if (promptsRes.ok) {
+          const promptsData = await promptsRes.json();
+          setPrompts(promptsData.data || []);
+        }
+
+        if (noteTypesRes.ok) {
+          const noteTypesData = await noteTypesRes.json();
+          setNoteTypes(noteTypesData.data || []);
+        }
+      } catch (error) {
+        console.error('Error fetching AI options:', error);
+      }
+    };
+
+    fetchAIOptions();
+  }, []);
 
   // Simulate loading state on mount
   React.useEffect(() => {
@@ -188,15 +221,12 @@ function TemplatesPage() {
   };
 
   return (
-    <div className="container mx-auto p-8">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold" data-testid="templates-title">
-          Note Templates
-        </h1>
-        <p className="mt-2 text-muted-foreground">
-          Manage your clinical documentation templates. Create, edit, and organize templates for different note types.
-        </p>
-      </div>
+    <PageContainer>
+      <PageHeader
+        title="Note Templates"
+        description="Manage your clinical documentation templates. Create, edit, and organize templates for different note types."
+        className="mb-8"
+      />
 
       <TemplateList
         templates={templates}
@@ -220,25 +250,31 @@ function TemplatesPage() {
                 : 'Fill in the template details and add sections to create your custom template.'}
             </DialogDescription>
           </DialogHeader>
-          <TemplateEditor
-            initialData={
-              editingTemplate
-                ? {
-                    name: editingTemplate.name,
-                    description: editingTemplate.description,
-                    templateType: editingTemplate.templateType,
-                    isDefault: editingTemplate.isDefault,
-                    status: editingTemplate.status,
-                    sections: [],
-                  }
-                : undefined
-            }
-            onSubmit={handleEditorSubmit}
-            onCancel={handleEditorCancel}
-            isSubmitting={isSubmitting}
-          />
+          {/* Key forces remount when switching templates, preventing DnD state conflicts */}
+          {isEditorOpen && (
+            <TemplateEditor
+              key={editingTemplate?.id ?? 'new'}
+              initialData={
+                editingTemplate
+                  ? {
+                      name: editingTemplate.name,
+                      description: editingTemplate.description,
+                      templateType: editingTemplate.templateType,
+                      isDefault: editingTemplate.isDefault,
+                      status: editingTemplate.status,
+                      sections: [],
+                    }
+                  : undefined
+              }
+              onSubmit={handleEditorSubmit}
+              onCancel={handleEditorCancel}
+              isSubmitting={isSubmitting}
+              prompts={prompts}
+              noteTypes={noteTypes}
+            />
+          )}
         </DialogContent>
       </Dialog>
-    </div>
+    </PageContainer>
   );
 }

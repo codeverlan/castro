@@ -8,6 +8,8 @@ import { db } from '~/db';
 import { s3Credentials } from '~/db/schema';
 import { createErrorResponse, NotFoundError } from '~/lib/api-errors';
 import { eq } from 'drizzle-orm';
+import { checkRateLimit, rateLimitConfigs } from '~/lib/rate-limit';
+import { logCredentialAccess, logFailedOperation } from '~/lib/audit-logger';
 
 export const Route = createFileRoute('/api/s3-credentials/delete/$id')({
   server: {
@@ -16,7 +18,11 @@ export const Route = createFileRoute('/api/s3-credentials/delete/$id')({
        * DELETE /api/s3-credentials/delete/$id
        * Delete an S3 credential profile
        */
-      DELETE: async ({ params }) => {
+      DELETE: async ({ request, params }) => {
+        // Rate limiting
+        const rateLimitResponse = checkRateLimit(request, rateLimitConfigs.credentials);
+        if (rateLimitResponse) return rateLimitResponse;
+
         const { id } = params;
         const startTime = Date.now();
 
@@ -42,6 +48,17 @@ export const Route = createFileRoute('/api/s3-credentials/delete/$id')({
           const { clearCredentialCache } = await import('~/services/s3/client');
           clearCredentialCache(id);
 
+          // Log successful deletion
+          await logCredentialAccess({
+            request,
+            action: 'delete',
+            credentialType: 's3',
+            resourceId: id,
+            metadata: {
+              name: existingCredential.name,
+            },
+          });
+
           return Response.json({
             success: true,
             message: 'S3 credential profile deleted successfully',
@@ -52,6 +69,14 @@ export const Route = createFileRoute('/api/s3-credentials/delete/$id')({
             processingTime: Date.now() - startTime,
           });
         } catch (error) {
+          // Log failed operation
+          await logFailedOperation({
+            request,
+            action: 'credential_s3_delete',
+            resourceType: 's3_credentials',
+            resourceId: id,
+            error: error as Error,
+          });
           return createErrorResponse(error);
         }
       },

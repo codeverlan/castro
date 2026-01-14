@@ -1,0 +1,30 @@
+{
+  "category": "UI",
+  "description": "Create Navigation Flow System\n\nDesign and implement a complete navigation system that allows users to move between different sections or pages of the application.\n\nRequirements:\n- Define all primary navigation routes and their hierarchy\n- Implement a navigation component (navbar, sidebar, or menu) with links to key sections\n- Ensure proper routing configuration with URL path management\n- Add visual indicators for the current active page/section\n- Handle navigation state (history, back/forward functionality)\n- Implement breadcrumbs or path indicators for nested navigation if applicable\n- Ensure navigation is accessible (keyboard navigation, screen reader support)\n- Handle edge cases: invalid routes (404), protected routes, redirects\n- Test navigation flow across all defined routes\n- Ensure consistent navigation behavior across the application",
+  "title": "Navigation",
+  "images": [],
+  "imagePaths": [],
+  "textFilePaths": [],
+  "skipTests": false,
+  "model": "opencode/glm-4.7-free",
+  "thinkingLevel": "none",
+  "reasoningEffort": "none",
+  "branchName": "fix/nav",
+  "priority": 2,
+  "planningMode": "lite",
+  "requirePlanApproval": false,
+  "dependencies": [],
+  "workMode": "custom",
+  "titleGenerating": false,
+  "status": "completed",
+  "id": "feature-1768218141611-8sxtzmg0i",
+  "descriptionHistory": [
+    {
+      "description": "Create Navigation Flow System\n\nDesign and implement a complete navigation system that allows users to move between different sections or pages of the application.\n\nRequirements:\n- Define all primary navigation routes and their hierarchy\n- Implement a navigation component (navbar, sidebar, or menu) with links to key sections\n- Ensure proper routing configuration with URL path management\n- Add visual indicators for the current active page/section\n- Handle navigation state (history, back/forward functionality)\n- Implement breadcrumbs or path indicators for nested navigation if applicable\n- Ensure navigation is accessible (keyboard navigation, screen reader support)\n- Handle edge cases: invalid routes (404), protected routes, redirects\n- Test navigation flow across all defined routes\n- Ensure consistent navigation behavior across the application",
+      "timestamp": "2026-01-12T11:42:21.644Z",
+      "source": "initial"
+    }
+  ],
+  "startedAt": "2026-01-12T11:42:35.163Z",
+  "updatedAt": "2026-01-12T11:54:01.686Z"
+}

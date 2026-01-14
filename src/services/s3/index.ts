@@ -56,3 +56,30 @@ export {
   type S3TestConnectionResult as TestConnectionResult,
   type S3BucketInfo as BucketInfo,
 } from './service';
+
+// Upload/download operations
+export {
+  generatePresignedUploadUrl,
+  generatePresignedDownloadUrl,
+  uploadToS3,
+  deleteFromS3,
+  getObjectInfo,
+  objectExists,
+  downloadFromS3ToFile,
+  type PresignedUploadUrlOptions,
+  type PresignedUploadUrlResult,
+  type PresignedDownloadUrlOptions,
+  type PresignedDownloadUrlResult,
+  type S3UploadOptions,
+  type S3UploadResult,
+  type S3ObjectInfo,
+  type DownloadToFileOptions,
+  type DownloadToFileResult,
+} from './upload';
+
+// S3 key utilities
+export {
+  generateRecordingKey,
+  getExtensionFromMimeType,
+  parseRecordingKey,
+} from './keys';

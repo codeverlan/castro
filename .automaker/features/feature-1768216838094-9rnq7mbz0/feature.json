@@ -1,0 +1,27 @@
+{
+  "category": "Maintenance",
+  "description": "Pull latest from origin/main and resolve conflicts. Merge origin/main into the current branch (feature/master-1768213623526-rjcj), resolving any merge conflicts that arise. After resolving conflicts, ensure the code compiles and tests pass.",
+  "title": "Resolve Merge Conflicts",
+  "images": [],
+  "imagePaths": [],
+  "skipTests": true,
+  "model": "opus",
+  "thinkingLevel": "none",
+  "priority": 1,
+  "planningMode": "skip",
+  "requirePlanApproval": false,
+  "titleGenerating": false,
+  "status": "verified",
+  "dependencies": [],
+  "id": "feature-1768216838094-9rnq7mbz0",
+  "descriptionHistory": [
+    {
+      "description": "Pull latest from origin/main and resolve conflicts. Merge origin/main into the current branch (feature/master-1768213623526-rjcj), resolving any merge conflicts that arise. After resolving conflicts, ensure the code compiles and tests pass.",
+      "timestamp": "2026-01-12T11:20:38.177Z",
+      "source": "initial"
+    }
+  ],
+  "startedAt": "2026-01-12T11:20:38.248Z",
+  "updatedAt": "2026-01-12T11:22:41.698Z",
+  "justFinishedAt": "2026-01-12T11:22:41.698Z"
+}

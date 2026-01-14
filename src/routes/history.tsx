@@ -1,5 +1,6 @@
 import * as React from "react"
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router"
+import { toast } from "sonner"
 import { Button } from "~/components/ui/button"
 import {
   HistoryFilters,
@@ -7,7 +8,8 @@ import {
   AuditTrailViewer,
   type HistorySession,
 } from "~/components/history"
-import { ArrowLeft, RefreshCw } from "lucide-react"
+import { PageContainer, PageHeader } from "~/navigation"
+import { RefreshCw } from "lucide-react"
 
 export const Route = createFileRoute("/history")({
   component: HistoryPage,
@@ -146,8 +148,7 @@ function HistoryPage() {
 
       if (noteContent) {
         await navigator.clipboard.writeText(noteContent)
-        // Could add a toast notification here
-        console.log("Note copied to clipboard")
+        toast.success("Note copied to clipboard")
       }
     } catch (error) {
       console.error("Error copying note:", error)
@@ -155,32 +156,23 @@ function HistoryPage() {
   }
 
   return (
-    <div className="container mx-auto p-6 lg:p-8" data-testid="history-page">
+    <PageContainer data-testid="history-page">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" asChild>
-            <Link to="/">
-              <ArrowLeft className="h-5 w-5" />
-            </Link>
+      <PageHeader
+        title="Session History"
+        description="Browse and search historical documentation sessions"
+        actions={
+          <Button
+            variant="outline"
+            onClick={handleRefresh}
+            disabled={isRefreshing}
+            data-testid="history-refresh"
+          >
+            <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? "animate-spin" : ""}`} />
+            Refresh
           </Button>
-          <div>
-            <h1 className="text-3xl font-bold tracking-tight">Session History</h1>
-            <p className="text-muted-foreground mt-1">
-              Browse and search historical documentation sessions
-            </p>
-          </div>
-        </div>
-        <Button
-          variant="outline"
-          onClick={handleRefresh}
-          disabled={isRefreshing}
-          data-testid="history-refresh"
-        >
-          <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? "animate-spin" : ""}`} />
-          Refresh
-        </Button>
-      </div>
+        }
+      />
 
       {/* Filters */}
       <HistoryFilters
@@ -220,6 +212,6 @@ function HistoryPage() {
         sessionId={auditSession?.id || ""}
         sessionFileName={auditSession?.audioFileName}
       />
-    </div>
+    </PageContainer>
   )
 }

@@ -11,7 +11,8 @@ import {
   Eye,
   Copy,
   MoreHorizontal,
-  RefreshCw
+  RefreshCw,
+  Send
 } from "lucide-react"
 
 export interface SessionData {
@@ -25,6 +26,11 @@ export interface SessionData {
   templateName?: string
   hasNote?: boolean
   errorMessage?: string | null
+  // IntakeQ integration fields
+  clientId?: string | null
+  clientName?: string | null
+  dateOfService?: string | null
+  intakeqNoteType?: string | null
 }
 
 export interface SessionCardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -32,6 +38,7 @@ export interface SessionCardProps extends React.HTMLAttributes<HTMLDivElement> {
   onViewDetails?: (session: SessionData) => void
   onRetry?: (session: SessionData) => void
   onCopyNote?: (session: SessionData) => void
+  onSendToIntakeQ?: (session: SessionData) => void
 }
 
 // Format duration from seconds to mm:ss or hh:mm:ss
@@ -74,7 +81,7 @@ function getFileName(path: string): string {
 }
 
 const SessionCard = React.forwardRef<HTMLDivElement, SessionCardProps>(
-  ({ className, session, onViewDetails, onRetry, onCopyNote, ...props }, ref) => {
+  ({ className, session, onViewDetails, onRetry, onCopyNote, onSendToIntakeQ, ...props }, ref) => {
     const isProcessing = ["transcribing", "mapping", "completing"].includes(session.status)
     const isCompleted = session.status === "completed"
     const isFailed = session.status === "failed"
@@ -134,16 +141,28 @@ const SessionCard = React.forwardRef<HTMLDivElement, SessionCardProps>(
           {/* Action buttons */}
           <div className="flex items-center gap-2 pt-1">
             {isCompleted && session.hasNote && (
-              <Button
-                size="sm"
-                variant="outline"
-                className="h-7 text-xs"
-                onClick={() => onCopyNote?.(session)}
-                data-testid="copy-note-button"
-              >
-                <Copy className="h-3 w-3 mr-1" />
-                Copy Note
-              </Button>
+              <>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="h-7 text-xs"
+                  onClick={() => onCopyNote?.(session)}
+                  data-testid="copy-note-button"
+                >
+                  <Copy className="h-3 w-3 mr-1" />
+                  Copy
+                </Button>
+                <Button
+                  size="sm"
+                  variant="default"
+                  className="h-7 text-xs bg-indigo-600 hover:bg-indigo-700"
+                  onClick={() => onSendToIntakeQ?.(session)}
+                  data-testid="send-to-intakeq-button"
+                >
+                  <Send className="h-3 w-3 mr-1" />
+                  IntakeQ
+                </Button>
+              </>
             )}
 
             {needsInput && (

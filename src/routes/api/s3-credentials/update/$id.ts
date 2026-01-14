@@ -13,6 +13,8 @@ import {
 import { createErrorResponse, NotFoundError, ConflictError } from '~/lib/api-errors';
 import { eq, and } from 'drizzle-orm';
 import { redactCredential } from '~/services/s3/crypto';
+import { checkRateLimit, rateLimitConfigs } from '~/lib/rate-limit';
+import { logCredentialAccess, logFailedOperation } from '~/lib/audit-logger';
 
 export const Route = createFileRoute('/api/s3-credentials/update/$id')({
   server: {
@@ -22,6 +24,10 @@ export const Route = createFileRoute('/api/s3-credentials/update/$id')({
        * Update an S3 credential profile
        */
       PUT: async ({ request, params }) => {
+        // Rate limiting
+        const rateLimitResponse = checkRateLimit(request, rateLimitConfigs.credentials);
+        if (rateLimitResponse) return rateLimitResponse;
+
         const { id } = params;
         const startTime = Date.now();
 
@@ -180,11 +186,31 @@ export const Route = createFileRoute('/api/s3-credentials/update/$id')({
             roleExternalId: updatedCredential.roleExternalId ? '[REDACTED]' : null,
           };
 
+          // Log successful update
+          await logCredentialAccess({
+            request,
+            action: 'update',
+            credentialType: 's3',
+            resourceId: id,
+            metadata: {
+              name: updatedCredential.name,
+              fieldsUpdated: Object.keys(updateValues).filter(k => k !== 'updatedAt'),
+            },
+          });
+
           return Response.json({
             data: sanitized,
             processingTime: Date.now() - startTime,
           });
         } catch (error) {
+          // Log failed operation
+          await logFailedOperation({
+            request,
+            action: 'credential_s3_update',
+            resourceType: 's3_credentials',
+            resourceId: id,
+            error: error as Error,
+          });
           return createErrorResponse(error);
         }
       },

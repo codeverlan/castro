@@ -14,6 +14,7 @@ import {
   CreateS3CredentialDialog,
   EditS3CredentialDialog,
 } from '~/components/s3/S3CredentialsDialog';
+import { PageContainer, PageHeader } from '~/navigation';
 import type { z } from 'zod';
 import type { createS3CredentialsSchema } from '~/lib/validations/s3Credentials';
 
@@ -227,26 +228,23 @@ function S3CredentialsSettings() {
   };
 
   return (
-    <div className="container mx-auto p-6 lg:p-8">
-      <div className="mb-6 flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">S3 Credentials</h1>
-          <p className="mt-2 text-muted-foreground">
-            Manage AWS S3 credential profiles for secure storage access
-          </p>
-        </div>
-
-        <CreateS3CredentialDialog
-          trigger={
-            <Button>
-              <Plus className="mr-2 h-4 w-4" />
-              Add Credentials
-            </Button>
-          }
-          onSubmit={handleCreate}
-          isSubmitting={isSubmitting}
-        />
-      </div>
+    <PageContainer>
+      <PageHeader
+        title="S3 Credentials"
+        description="Manage AWS S3 credential profiles for secure storage access"
+        actions={
+          <CreateS3CredentialDialog
+            trigger={
+              <Button>
+                <Plus className="mr-2 h-4 w-4" />
+                Add Credentials
+              </Button>
+            }
+            onSubmit={handleCreate}
+            isSubmitting={isSubmitting}
+          />
+        }
+      />
 
       <S3CredentialsList
         credentials={credentials}
@@ -274,6 +272,6 @@ function S3CredentialsSettings() {
           isSubmitting={isSubmitting}
         />
       )}
-    </div>
+    </PageContainer>
   );
 }

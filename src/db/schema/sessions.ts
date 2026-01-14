@@ -7,9 +7,14 @@ import {
   integer,
   jsonb,
   pgEnum,
+  date,
+  boolean,
 } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
 import { noteTemplates } from './noteTemplates';
+import { clients } from './clients';
+import { sessionRecordings } from './sessionRecordings';
+import { processingPrompts } from './processingPrompts';
 
 // Enum for session processing status
 export const sessionStatusEnum = pgEnum('session_status', [
@@ -39,6 +44,20 @@ export const sessions = pgTable('sessions', {
   templateId: uuid('template_id')
     .notNull()
     .references(() => noteTemplates.id),
+  // Reference to the client (optional - for IntakeQ integration)
+  clientId: uuid('client_id')
+    .references(() => clients.id),
+  // Date of service for this session
+  dateOfService: date('date_of_service'),
+  // IntakeQ note type for field mapping
+  intakeqNoteType: varchar('intakeq_note_type', { length: 100 }),
+
+  // AI Processing Prompt overrides (if different from template defaults)
+  transformPromptId: uuid('transform_prompt_id')
+    .references(() => processingPrompts.id, { onDelete: 'set null' }),
+  extractPromptId: uuid('extract_prompt_id')
+    .references(() => processingPrompts.id, { onDelete: 'set null' }),
+
   // Session status
   status: sessionStatusEnum('status').default('pending').notNull(),
   // Original audio file path (local path for HIPAA compliance)
@@ -89,9 +108,6 @@ export const sessionSectionContent = pgTable('session_section_content', {
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
 });
-
-// Import boolean from pg-core for needsReview
-import { boolean } from 'drizzle-orm/pg-core';
 
 // Session Gaps table - tracks identified gaps in documentation
 export const sessionGaps = pgTable('session_gaps', {
@@ -149,9 +165,25 @@ export const sessionsRelations = relations(sessions, ({ one, many }) => ({
     fields: [sessions.templateId],
     references: [noteTemplates.id],
   }),
+  client: one(clients, {
+    fields: [sessions.clientId],
+    references: [clients.id],
+  }),
+  // AI Processing Prompt relations
+  transformPrompt: one(processingPrompts, {
+    fields: [sessions.transformPromptId],
+    references: [processingPrompts.id],
+    relationName: 'sessionTransformPrompt',
+  }),
+  extractPrompt: one(processingPrompts, {
+    fields: [sessions.extractPromptId],
+    references: [processingPrompts.id],
+    relationName: 'sessionExtractPrompt',
+  }),
   sectionContent: many(sessionSectionContent),
   gaps: many(sessionGaps),
   finalNote: one(finalNotes),
+  recordings: many(sessionRecordings),
 }));
 
 export const sessionSectionContentRelations = relations(sessionSectionContent, ({ one, many }) => ({

@@ -1,0 +1,189 @@
+/* Castro IntakeQ Bridge - Content Script Styles */
+
+/* Overlay Container */
+#castro-bridge-overlay {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 320px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  z-index: 999999;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  color: #333;
+  overflow: hidden;
+  animation: castro-slide-in 0.3s ease-out;
+}
+
+@keyframes castro-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Header */
+.castro-overlay-header {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+  color: #ffffff;
+}
+
+.castro-logo {
+  font-size: 18px;
+  margin-right: 8px;
+}
+
+.castro-title {
+  flex: 1;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.castro-close-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: #ffffff;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.castro-close-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Content */
+.castro-overlay-content {
+  padding: 16px;
+}
+
+.castro-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.castro-info strong {
+  font-size: 16px;
+  color: #1f2937;
+}
+
+.castro-dos {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.castro-warning {
+  background: #fef3c7;
+  border: 1px solid #fbbf24;
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 13px;
+  color: #92400e;
+  margin-bottom: 16px;
+}
+
+/* Actions */
+.castro-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.castro-btn {
+  flex: 1;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+
+.castro-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.castro-btn-primary {
+  background: #4f46e5;
+  color: #ffffff;
+}
+
+.castro-btn-primary:hover:not(:disabled) {
+  background: #4338ca;
+}
+
+.castro-btn-secondary {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.castro-btn-secondary:hover:not(:disabled) {
+  background: #e5e7eb;
+}
+
+/* Footer */
+.castro-overlay-footer {
+  padding: 8px 16px;
+  background: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+  font-size: 12px;
+  color: #6b7280;
+  min-height: 32px;
+}
+
+/* Confidence Badges */
+.castro-confidence-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  margin-left: 8px;
+  vertical-align: middle;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.castro-confidence-high {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.castro-confidence-medium {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.castro-confidence-low {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* Field Highlight */
+.castro-field-filled {
+  outline: 2px solid #4f46e5 !important;
+  outline-offset: 2px;
+}
+
+.castro-field-error {
+  outline: 2px solid #dc2626 !important;
+  outline-offset: 2px;
+}

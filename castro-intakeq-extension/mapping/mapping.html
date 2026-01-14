@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Field Mappings - Castro IntakeQ Bridge</title>
+  <link rel="stylesheet" href="mapping.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Field Mappings</h1>
+      <p class="subtitle">Configure how Castro sections map to IntakeQ fields</p>
+    </header>
+
+    <main>
+      <!-- Existing Mappings -->
+      <section class="mappings-section">
+        <h2>Saved Mappings</h2>
+        <div id="mappings-list" class="mappings-list">
+          <p class="empty-state">No mappings configured yet</p>
+        </div>
+      </section>
+
+      <!-- Add New Mapping -->
+      <section class="add-section">
+        <h2>Add New Mapping</h2>
+        <form id="mapping-form">
+          <div class="form-group">
+            <label for="note-type">Note Type Name</label>
+            <input type="text" id="note-type" placeholder="e.g., Individual Progress Note" required>
+            <span class="hint">The name of the IntakeQ note type this mapping applies to</span>
+          </div>
+
+          <div class="form-group">
+            <label for="url-pattern">URL Pattern (Optional)</label>
+            <input type="text" id="url-pattern" placeholder="e.g., /notes/progress/">
+            <span class="hint">Regex pattern to match IntakeQ URLs for auto-detection</span>
+          </div>
+
+          <h3>Field Mappings</h3>
+          <div id="field-mappings" class="field-mappings">
+            <!-- Dynamic field mapping rows -->
+          </div>
+
+          <button type="button" id="add-field-btn" class="btn btn-secondary">
+            + Add Field Mapping
+          </button>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save Mapping</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Instructions -->
+      <section class="instructions-section">
+        <h2>How to Find IntakeQ Selectors</h2>
+        <ol>
+          <li>Open IntakeQ and navigate to a note form</li>
+          <li>Right-click on the field you want to map</li>
+          <li>Select "Inspect" to open Developer Tools</li>
+          <li>Look for the field's <code>id</code>, <code>name</code>, or <code>class</code> attribute</li>
+          <li>Use that as the selector:
+            <ul>
+              <li>ID: <code>#field-name</code></li>
+              <li>Name: <code>[name="field_name"]</code></li>
+              <li>Class: <code>.field-class</code></li>
+            </ul>
+          </li>
+        </ol>
+      </section>
+    </main>
+
+    <footer>
+      <a href="#" id="export-btn">Export Mappings</a>
+      <span class="divider">|</span>
+      <a href="#" id="import-btn">Import Mappings</a>
+      <input type="file" id="import-file" accept=".json" hidden>
+    </footer>
+  </div>
+
+  <script src="mapping.js"></script>
+</body>
+</html>

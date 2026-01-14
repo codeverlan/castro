@@ -21,6 +21,8 @@ import {
   sql,
 } from 'drizzle-orm';
 import { redactCredential } from '~/services/s3/crypto';
+import { checkRateLimit, rateLimitConfigs } from '~/lib/rate-limit';
+import { logCredentialAccess, logFailedOperation } from '~/lib/audit-logger';
 
 export const Route = createFileRoute('/api/s3-credentials/')({
   server: {
@@ -30,6 +32,10 @@ export const Route = createFileRoute('/api/s3-credentials/')({
        * List all S3 credential profiles with optional filtering
        */
       GET: async ({ request }) => {
+        // Rate limiting
+        const rateLimitResponse = checkRateLimit(request, rateLimitConfigs.credentials);
+        if (rateLimitResponse) return rateLimitResponse;
+
         try {
           const url = new URL(request.url);
           const queryParams = {
@@ -90,6 +96,17 @@ export const Route = createFileRoute('/api/s3-credentials/')({
             roleExternalId: cred.roleExternalId ? '[REDACTED]' : null,
           }));
 
+          // Log successful access
+          await logCredentialAccess({
+            request,
+            action: 'list',
+            credentialType: 's3',
+            metadata: {
+              count: sanitizedCredentials.length,
+              filters: validatedQuery,
+            },
+          });
+
           return Response.json({
             data: sanitizedCredentials,
             pagination: {
@@ -100,6 +117,13 @@ export const Route = createFileRoute('/api/s3-credentials/')({
             },
           });
         } catch (error) {
+          // Log failed operation
+          await logFailedOperation({
+            request,
+            action: 'credential_s3_list',
+            resourceType: 's3_credentials',
+            error: error as Error,
+          });
           return createErrorResponse(error);
         }
       },
@@ -109,6 +133,10 @@ export const Route = createFileRoute('/api/s3-credentials/')({
        * Create a new S3 credential profile
        */
       POST: async ({ request }) => {
+        // Rate limiting
+        const rateLimitResponse = checkRateLimit(request, rateLimitConfigs.credentials);
+        if (rateLimitResponse) return rateLimitResponse;
+
         try {
           const body = await request.json();
 
@@ -166,11 +194,31 @@ export const Route = createFileRoute('/api/s3-credentials/')({
             roleExternalId: newCredential.roleExternalId ? '[REDACTED]' : null,
           };
 
+          // Log successful creation
+          await logCredentialAccess({
+            request,
+            action: 'create',
+            credentialType: 's3',
+            resourceId: newCredential.id,
+            metadata: {
+              name: newCredential.name,
+              authMethod: newCredential.authMethod,
+              region: newCredential.region,
+            },
+          });
+
           return Response.json(
             { data: sanitized },
             { status: 201 }
           );
         } catch (error) {
+          // Log failed operation
+          await logFailedOperation({
+            request,
+            action: 'credential_s3_create',
+            resourceType: 's3_credentials',
+            error: error as Error,
+          });
           return createErrorResponse(error);
         }
       },
