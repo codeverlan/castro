@@ -6,7 +6,7 @@
 import { db } from '~/db';
 import { intakeqSettings } from '~/db/schema';
 import { eq } from 'drizzle-orm';
-import { decryptData } from '~/services/s3/crypto';
+import { decryptData, encryptData } from '~/services/s3/crypto';
 
 export interface IntakeQConfig {
   apiKey: string;
@@ -69,4 +69,27 @@ export async function getIntakeQConfig(): Promise<IntakeQConfig | null> {
 export async function isIntakeQConfigured(): Promise<boolean> {
   const config = await getIntakeQConfig();
   return config !== null;
+}
+
+/**
+ * Save IntakeQ configuration to database
+ */
+export async function saveIntakeQConfig(config: {
+  apiKey: string;
+  defaultPractitionerId?: string | null;
+}): Promise<void> {
+  // Encrypt the API key
+  const encryptedApiKey = JSON.stringify(encryptData(config.apiKey));
+
+  // Deactivate all existing settings
+  await db
+    .update(intakeqSettings)
+    .set({ isActive: false, updatedAt: new Date() });
+
+  // Insert new settings
+  await db.insert(intakeqSettings).values({
+    apiKey: encryptedApiKey,
+    defaultPractitionerId: config.defaultPractitionerId || null,
+    isActive: true,
+  });
 }

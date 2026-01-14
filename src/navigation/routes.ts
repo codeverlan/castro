@@ -13,6 +13,7 @@ export const ROUTES = {
   // Settings routes
   SETTINGS: {
     ROOT: '/settings',
+    ENVIRONMENT: '/settings/environment',
     S3: '/settings/s3',
     PROMPTS: '/settings/prompts',
     INTAKEQ_TYPES: '/settings/intakeq-types',
@@ -46,6 +47,7 @@ export const ROUTE_NAMES: Record<string, string> = {
   '/': 'Dashboard',
   '/templates': 'Note Templates',
   '/history': 'Session History',
+  '/settings/environment': 'Environment Settings',
   '/settings/s3': 'S3 Credentials',
   '/settings/prompts': 'AI Prompts',
   '/settings/intakeq-types': 'IntakeQ Note Types',
@@ -98,6 +100,13 @@ export const NAV_ITEMS: RouteConfig[] = [
 // Settings navigation items
 export const SETTINGS_NAV_ITEMS: RouteConfig[] = [
   {
+    path: ROUTES.SETTINGS.ENVIRONMENT,
+    name: 'Environment',
+    icon: 'settings',
+    showInNav: true,
+    requiresAuth: true,
+  },
+  {
     path: ROUTES.SETTINGS.S3,
     name: 'S3 Credentials',
     icon: 'cloud',
@@ -146,6 +155,11 @@ export const BREADCRUMB_CONFIG: Record<string, BreadcrumbItem[]> = {
   '/history': [
     { label: 'Dashboard', path: '/' },
     { label: 'History' },
+  ],
+  '/settings/environment': [
+    { label: 'Dashboard', path: '/' },
+    { label: 'Settings' },
+    { label: 'Environment' },
   ],
   '/settings/s3': [
     { label: 'Dashboard', path: '/' },

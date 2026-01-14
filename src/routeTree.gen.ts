@@ -16,35 +16,7 @@ import { Route as SettingsS3RouteImport } from './routes/settings/s3'
 import { Route as SettingsPromptsRouteImport } from './routes/settings/prompts'
 import { Route as SettingsIntakeqTypesRouteImport } from './routes/settings/intakeq-types'
 import { Route as SettingsIntakeqRouteImport } from './routes/settings/intakeq'
-import { Route as ApiTemplatesIndexRouteImport } from './routes/api/templates/index'
-import { Route as ApiSessionsIndexRouteImport } from './routes/api/sessions/index'
-import { Route as ApiS3CredentialsIndexRouteImport } from './routes/api/s3-credentials/index'
-import { Route as ApiRecordingsIndexRouteImport } from './routes/api/recordings/index'
-import { Route as ApiPromptsIndexRouteImport } from './routes/api/prompts/index'
-import { Route as ApiNotesIndexRouteImport } from './routes/api/notes/index'
-import { Route as ApiGapsIndexRouteImport } from './routes/api/gaps/index'
-import { Route as ApiAuditLogsIndexRouteImport } from './routes/api/audit-logs/index'
-import { Route as ApiTemplatesIdRouteImport } from './routes/api/templates/$id'
-import { Route as ApiSessionsHistoryRouteImport } from './routes/api/sessions/history'
-import { Route as ApiRecordingsIdRouteImport } from './routes/api/recordings/$id'
-import { Route as ApiPromptsIdRouteImport } from './routes/api/prompts/$id'
-import { Route as ApiNotesExportRouteImport } from './routes/api/notes/export'
-import { Route as ApiNotesNoteIdRouteImport } from './routes/api/notes/$noteId'
-import { Route as ApiIntakeqTestRouteImport } from './routes/api/intakeq/test'
-import { Route as ApiIntakeqSettingsRouteImport } from './routes/api/intakeq/settings'
-import { Route as ApiIntakeqConfigRouteImport } from './routes/api/intakeq/config'
-import { Route as ApiIntakeqAppointmentsRouteImport } from './routes/api/intakeq/appointments'
-import { Route as ApiGapsBatchRouteImport } from './routes/api/gaps/batch'
-import { Route as ApiGapsIdRouteImport } from './routes/api/gaps/$id'
-import { Route as ApiIntakeqNoteTypesIndexRouteImport } from './routes/api/intakeq/note-types/index'
-import { Route as ApiSessionsIdSectionsRouteImport } from './routes/api/sessions/$id.sections'
-import { Route as ApiS3CredentialsUpdateIdRouteImport } from './routes/api/s3-credentials/update/$id'
-import { Route as ApiS3CredentialsTestIdRouteImport } from './routes/api/s3-credentials/test/$id'
-import { Route as ApiS3CredentialsDeleteIdRouteImport } from './routes/api/s3-credentials/delete/$id'
-import { Route as ApiRecordingsIdCompleteRouteImport } from './routes/api/recordings/$id.complete'
-import { Route as ApiRecordingsIdAttachRouteImport } from './routes/api/recordings/$id.attach'
-import { Route as ApiPromptsIdDuplicateRouteImport } from './routes/api/prompts/$id.duplicate'
-import { Route as ApiIntakeqNoteTypesIdRouteImport } from './routes/api/intakeq/note-types/$id'
+import { Route as SettingsEnvironmentRouteImport } from './routes/settings/environment'
 
 const TemplatesRoute = TemplatesRouteImport.update({
   id: '/templates',
@@ -81,152 +53,9 @@ const SettingsIntakeqRoute = SettingsIntakeqRouteImport.update({
   path: '/settings/intakeq',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiTemplatesIndexRoute = ApiTemplatesIndexRouteImport.update({
-  id: '/api/templates/',
-  path: '/api/templates/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiSessionsIndexRoute = ApiSessionsIndexRouteImport.update({
-  id: '/api/sessions/',
-  path: '/api/sessions/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiS3CredentialsIndexRoute = ApiS3CredentialsIndexRouteImport.update({
-  id: '/api/s3-credentials/',
-  path: '/api/s3-credentials/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiRecordingsIndexRoute = ApiRecordingsIndexRouteImport.update({
-  id: '/api/recordings/',
-  path: '/api/recordings/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiPromptsIndexRoute = ApiPromptsIndexRouteImport.update({
-  id: '/api/prompts/',
-  path: '/api/prompts/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiNotesIndexRoute = ApiNotesIndexRouteImport.update({
-  id: '/api/notes/',
-  path: '/api/notes/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiGapsIndexRoute = ApiGapsIndexRouteImport.update({
-  id: '/api/gaps/',
-  path: '/api/gaps/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiAuditLogsIndexRoute = ApiAuditLogsIndexRouteImport.update({
-  id: '/api/audit-logs/',
-  path: '/api/audit-logs/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiTemplatesIdRoute = ApiTemplatesIdRouteImport.update({
-  id: '/api/templates/$id',
-  path: '/api/templates/$id',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiSessionsHistoryRoute = ApiSessionsHistoryRouteImport.update({
-  id: '/api/sessions/history',
-  path: '/api/sessions/history',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiRecordingsIdRoute = ApiRecordingsIdRouteImport.update({
-  id: '/api/recordings/$id',
-  path: '/api/recordings/$id',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiPromptsIdRoute = ApiPromptsIdRouteImport.update({
-  id: '/api/prompts/$id',
-  path: '/api/prompts/$id',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiNotesExportRoute = ApiNotesExportRouteImport.update({
-  id: '/api/notes/export',
-  path: '/api/notes/export',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiNotesNoteIdRoute = ApiNotesNoteIdRouteImport.update({
-  id: '/api/notes/$noteId',
-  path: '/api/notes/$noteId',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiIntakeqTestRoute = ApiIntakeqTestRouteImport.update({
-  id: '/api/intakeq/test',
-  path: '/api/intakeq/test',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiIntakeqSettingsRoute = ApiIntakeqSettingsRouteImport.update({
-  id: '/api/intakeq/settings',
-  path: '/api/intakeq/settings',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiIntakeqConfigRoute = ApiIntakeqConfigRouteImport.update({
-  id: '/api/intakeq/config',
-  path: '/api/intakeq/config',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiIntakeqAppointmentsRoute = ApiIntakeqAppointmentsRouteImport.update({
-  id: '/api/intakeq/appointments',
-  path: '/api/intakeq/appointments',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiGapsBatchRoute = ApiGapsBatchRouteImport.update({
-  id: '/api/gaps/batch',
-  path: '/api/gaps/batch',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiGapsIdRoute = ApiGapsIdRouteImport.update({
-  id: '/api/gaps/$id',
-  path: '/api/gaps/$id',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiIntakeqNoteTypesIndexRoute =
-  ApiIntakeqNoteTypesIndexRouteImport.update({
-    id: '/api/intakeq/note-types/',
-    path: '/api/intakeq/note-types/',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const ApiSessionsIdSectionsRoute = ApiSessionsIdSectionsRouteImport.update({
-  id: '/api/sessions/$id/sections',
-  path: '/api/sessions/$id/sections',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiS3CredentialsUpdateIdRoute =
-  ApiS3CredentialsUpdateIdRouteImport.update({
-    id: '/api/s3-credentials/update/$id',
-    path: '/api/s3-credentials/update/$id',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const ApiS3CredentialsTestIdRoute = ApiS3CredentialsTestIdRouteImport.update({
-  id: '/api/s3-credentials/test/$id',
-  path: '/api/s3-credentials/test/$id',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiS3CredentialsDeleteIdRoute =
-  ApiS3CredentialsDeleteIdRouteImport.update({
-    id: '/api/s3-credentials/delete/$id',
-    path: '/api/s3-credentials/delete/$id',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const ApiRecordingsIdCompleteRoute = ApiRecordingsIdCompleteRouteImport.update({
-  id: '/complete',
-  path: '/complete',
-  getParentRoute: () => ApiRecordingsIdRoute,
-} as any)
-const ApiRecordingsIdAttachRoute = ApiRecordingsIdAttachRouteImport.update({
-  id: '/attach',
-  path: '/attach',
-  getParentRoute: () => ApiRecordingsIdRoute,
-} as any)
-const ApiPromptsIdDuplicateRoute = ApiPromptsIdDuplicateRouteImport.update({
-  id: '/duplicate',
-  path: '/duplicate',
-  getParentRoute: () => ApiPromptsIdRoute,
-} as any)
-const ApiIntakeqNoteTypesIdRoute = ApiIntakeqNoteTypesIdRouteImport.update({
-  id: '/api/intakeq/note-types/$id',
-  path: '/api/intakeq/note-types/$id',
+const SettingsEnvironmentRoute = SettingsEnvironmentRouteImport.update({
+  id: '/settings/environment',
+  path: '/settings/environment',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -234,116 +63,32 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/history': typeof HistoryRoute
   '/templates': typeof TemplatesRoute
+  '/settings/environment': typeof SettingsEnvironmentRoute
   '/settings/intakeq': typeof SettingsIntakeqRoute
   '/settings/intakeq-types': typeof SettingsIntakeqTypesRoute
   '/settings/prompts': typeof SettingsPromptsRoute
   '/settings/s3': typeof SettingsS3Route
-  '/api/gaps/$id': typeof ApiGapsIdRoute
-  '/api/gaps/batch': typeof ApiGapsBatchRoute
-  '/api/intakeq/appointments': typeof ApiIntakeqAppointmentsRoute
-  '/api/intakeq/config': typeof ApiIntakeqConfigRoute
-  '/api/intakeq/settings': typeof ApiIntakeqSettingsRoute
-  '/api/intakeq/test': typeof ApiIntakeqTestRoute
-  '/api/notes/$noteId': typeof ApiNotesNoteIdRoute
-  '/api/notes/export': typeof ApiNotesExportRoute
-  '/api/prompts/$id': typeof ApiPromptsIdRouteWithChildren
-  '/api/recordings/$id': typeof ApiRecordingsIdRouteWithChildren
-  '/api/sessions/history': typeof ApiSessionsHistoryRoute
-  '/api/templates/$id': typeof ApiTemplatesIdRoute
-  '/api/audit-logs': typeof ApiAuditLogsIndexRoute
-  '/api/gaps': typeof ApiGapsIndexRoute
-  '/api/notes': typeof ApiNotesIndexRoute
-  '/api/prompts': typeof ApiPromptsIndexRoute
-  '/api/recordings': typeof ApiRecordingsIndexRoute
-  '/api/s3-credentials': typeof ApiS3CredentialsIndexRoute
-  '/api/sessions': typeof ApiSessionsIndexRoute
-  '/api/templates': typeof ApiTemplatesIndexRoute
-  '/api/intakeq/note-types/$id': typeof ApiIntakeqNoteTypesIdRoute
-  '/api/prompts/$id/duplicate': typeof ApiPromptsIdDuplicateRoute
-  '/api/recordings/$id/attach': typeof ApiRecordingsIdAttachRoute
-  '/api/recordings/$id/complete': typeof ApiRecordingsIdCompleteRoute
-  '/api/s3-credentials/delete/$id': typeof ApiS3CredentialsDeleteIdRoute
-  '/api/s3-credentials/test/$id': typeof ApiS3CredentialsTestIdRoute
-  '/api/s3-credentials/update/$id': typeof ApiS3CredentialsUpdateIdRoute
-  '/api/sessions/$id/sections': typeof ApiSessionsIdSectionsRoute
-  '/api/intakeq/note-types': typeof ApiIntakeqNoteTypesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/history': typeof HistoryRoute
   '/templates': typeof TemplatesRoute
+  '/settings/environment': typeof SettingsEnvironmentRoute
   '/settings/intakeq': typeof SettingsIntakeqRoute
   '/settings/intakeq-types': typeof SettingsIntakeqTypesRoute
   '/settings/prompts': typeof SettingsPromptsRoute
   '/settings/s3': typeof SettingsS3Route
-  '/api/gaps/$id': typeof ApiGapsIdRoute
-  '/api/gaps/batch': typeof ApiGapsBatchRoute
-  '/api/intakeq/appointments': typeof ApiIntakeqAppointmentsRoute
-  '/api/intakeq/config': typeof ApiIntakeqConfigRoute
-  '/api/intakeq/settings': typeof ApiIntakeqSettingsRoute
-  '/api/intakeq/test': typeof ApiIntakeqTestRoute
-  '/api/notes/$noteId': typeof ApiNotesNoteIdRoute
-  '/api/notes/export': typeof ApiNotesExportRoute
-  '/api/prompts/$id': typeof ApiPromptsIdRouteWithChildren
-  '/api/recordings/$id': typeof ApiRecordingsIdRouteWithChildren
-  '/api/sessions/history': typeof ApiSessionsHistoryRoute
-  '/api/templates/$id': typeof ApiTemplatesIdRoute
-  '/api/audit-logs': typeof ApiAuditLogsIndexRoute
-  '/api/gaps': typeof ApiGapsIndexRoute
-  '/api/notes': typeof ApiNotesIndexRoute
-  '/api/prompts': typeof ApiPromptsIndexRoute
-  '/api/recordings': typeof ApiRecordingsIndexRoute
-  '/api/s3-credentials': typeof ApiS3CredentialsIndexRoute
-  '/api/sessions': typeof ApiSessionsIndexRoute
-  '/api/templates': typeof ApiTemplatesIndexRoute
-  '/api/intakeq/note-types/$id': typeof ApiIntakeqNoteTypesIdRoute
-  '/api/prompts/$id/duplicate': typeof ApiPromptsIdDuplicateRoute
-  '/api/recordings/$id/attach': typeof ApiRecordingsIdAttachRoute
-  '/api/recordings/$id/complete': typeof ApiRecordingsIdCompleteRoute
-  '/api/s3-credentials/delete/$id': typeof ApiS3CredentialsDeleteIdRoute
-  '/api/s3-credentials/test/$id': typeof ApiS3CredentialsTestIdRoute
-  '/api/s3-credentials/update/$id': typeof ApiS3CredentialsUpdateIdRoute
-  '/api/sessions/$id/sections': typeof ApiSessionsIdSectionsRoute
-  '/api/intakeq/note-types': typeof ApiIntakeqNoteTypesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/history': typeof HistoryRoute
   '/templates': typeof TemplatesRoute
+  '/settings/environment': typeof SettingsEnvironmentRoute
   '/settings/intakeq': typeof SettingsIntakeqRoute
   '/settings/intakeq-types': typeof SettingsIntakeqTypesRoute
   '/settings/prompts': typeof SettingsPromptsRoute
   '/settings/s3': typeof SettingsS3Route
-  '/api/gaps/$id': typeof ApiGapsIdRoute
-  '/api/gaps/batch': typeof ApiGapsBatchRoute
-  '/api/intakeq/appointments': typeof ApiIntakeqAppointmentsRoute
-  '/api/intakeq/config': typeof ApiIntakeqConfigRoute
-  '/api/intakeq/settings': typeof ApiIntakeqSettingsRoute
-  '/api/intakeq/test': typeof ApiIntakeqTestRoute
-  '/api/notes/$noteId': typeof ApiNotesNoteIdRoute
-  '/api/notes/export': typeof ApiNotesExportRoute
-  '/api/prompts/$id': typeof ApiPromptsIdRouteWithChildren
-  '/api/recordings/$id': typeof ApiRecordingsIdRouteWithChildren
-  '/api/sessions/history': typeof ApiSessionsHistoryRoute
-  '/api/templates/$id': typeof ApiTemplatesIdRoute
-  '/api/audit-logs/': typeof ApiAuditLogsIndexRoute
-  '/api/gaps/': typeof ApiGapsIndexRoute
-  '/api/notes/': typeof ApiNotesIndexRoute
-  '/api/prompts/': typeof ApiPromptsIndexRoute
-  '/api/recordings/': typeof ApiRecordingsIndexRoute
-  '/api/s3-credentials/': typeof ApiS3CredentialsIndexRoute
-  '/api/sessions/': typeof ApiSessionsIndexRoute
-  '/api/templates/': typeof ApiTemplatesIndexRoute
-  '/api/intakeq/note-types/$id': typeof ApiIntakeqNoteTypesIdRoute
-  '/api/prompts/$id/duplicate': typeof ApiPromptsIdDuplicateRoute
-  '/api/recordings/$id/attach': typeof ApiRecordingsIdAttachRoute
-  '/api/recordings/$id/complete': typeof ApiRecordingsIdCompleteRoute
-  '/api/s3-credentials/delete/$id': typeof ApiS3CredentialsDeleteIdRoute
-  '/api/s3-credentials/test/$id': typeof ApiS3CredentialsTestIdRoute
-  '/api/s3-credentials/update/$id': typeof ApiS3CredentialsUpdateIdRoute
-  '/api/sessions/$id/sections': typeof ApiSessionsIdSectionsRoute
-  '/api/intakeq/note-types/': typeof ApiIntakeqNoteTypesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -351,151 +96,42 @@ export interface FileRouteTypes {
     | '/'
     | '/history'
     | '/templates'
+    | '/settings/environment'
     | '/settings/intakeq'
     | '/settings/intakeq-types'
     | '/settings/prompts'
     | '/settings/s3'
-    | '/api/gaps/$id'
-    | '/api/gaps/batch'
-    | '/api/intakeq/appointments'
-    | '/api/intakeq/config'
-    | '/api/intakeq/settings'
-    | '/api/intakeq/test'
-    | '/api/notes/$noteId'
-    | '/api/notes/export'
-    | '/api/prompts/$id'
-    | '/api/recordings/$id'
-    | '/api/sessions/history'
-    | '/api/templates/$id'
-    | '/api/audit-logs'
-    | '/api/gaps'
-    | '/api/notes'
-    | '/api/prompts'
-    | '/api/recordings'
-    | '/api/s3-credentials'
-    | '/api/sessions'
-    | '/api/templates'
-    | '/api/intakeq/note-types/$id'
-    | '/api/prompts/$id/duplicate'
-    | '/api/recordings/$id/attach'
-    | '/api/recordings/$id/complete'
-    | '/api/s3-credentials/delete/$id'
-    | '/api/s3-credentials/test/$id'
-    | '/api/s3-credentials/update/$id'
-    | '/api/sessions/$id/sections'
-    | '/api/intakeq/note-types'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/history'
     | '/templates'
+    | '/settings/environment'
     | '/settings/intakeq'
     | '/settings/intakeq-types'
     | '/settings/prompts'
     | '/settings/s3'
-    | '/api/gaps/$id'
-    | '/api/gaps/batch'
-    | '/api/intakeq/appointments'
-    | '/api/intakeq/config'
-    | '/api/intakeq/settings'
-    | '/api/intakeq/test'
-    | '/api/notes/$noteId'
-    | '/api/notes/export'
-    | '/api/prompts/$id'
-    | '/api/recordings/$id'
-    | '/api/sessions/history'
-    | '/api/templates/$id'
-    | '/api/audit-logs'
-    | '/api/gaps'
-    | '/api/notes'
-    | '/api/prompts'
-    | '/api/recordings'
-    | '/api/s3-credentials'
-    | '/api/sessions'
-    | '/api/templates'
-    | '/api/intakeq/note-types/$id'
-    | '/api/prompts/$id/duplicate'
-    | '/api/recordings/$id/attach'
-    | '/api/recordings/$id/complete'
-    | '/api/s3-credentials/delete/$id'
-    | '/api/s3-credentials/test/$id'
-    | '/api/s3-credentials/update/$id'
-    | '/api/sessions/$id/sections'
-    | '/api/intakeq/note-types'
   id:
     | '__root__'
     | '/'
     | '/history'
     | '/templates'
+    | '/settings/environment'
     | '/settings/intakeq'
     | '/settings/intakeq-types'
     | '/settings/prompts'
     | '/settings/s3'
-    | '/api/gaps/$id'
-    | '/api/gaps/batch'
-    | '/api/intakeq/appointments'
-    | '/api/intakeq/config'
-    | '/api/intakeq/settings'
-    | '/api/intakeq/test'
-    | '/api/notes/$noteId'
-    | '/api/notes/export'
-    | '/api/prompts/$id'
-    | '/api/recordings/$id'
-    | '/api/sessions/history'
-    | '/api/templates/$id'
-    | '/api/audit-logs/'
-    | '/api/gaps/'
-    | '/api/notes/'
-    | '/api/prompts/'
-    | '/api/recordings/'
-    | '/api/s3-credentials/'
-    | '/api/sessions/'
-    | '/api/templates/'
-    | '/api/intakeq/note-types/$id'
-    | '/api/prompts/$id/duplicate'
-    | '/api/recordings/$id/attach'
-    | '/api/recordings/$id/complete'
-    | '/api/s3-credentials/delete/$id'
-    | '/api/s3-credentials/test/$id'
-    | '/api/s3-credentials/update/$id'
-    | '/api/sessions/$id/sections'
-    | '/api/intakeq/note-types/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   HistoryRoute: typeof HistoryRoute
   TemplatesRoute: typeof TemplatesRoute
+  SettingsEnvironmentRoute: typeof SettingsEnvironmentRoute
   SettingsIntakeqRoute: typeof SettingsIntakeqRoute
   SettingsIntakeqTypesRoute: typeof SettingsIntakeqTypesRoute
   SettingsPromptsRoute: typeof SettingsPromptsRoute
   SettingsS3Route: typeof SettingsS3Route
-  ApiGapsIdRoute: typeof ApiGapsIdRoute
-  ApiGapsBatchRoute: typeof ApiGapsBatchRoute
-  ApiIntakeqAppointmentsRoute: typeof ApiIntakeqAppointmentsRoute
-  ApiIntakeqConfigRoute: typeof ApiIntakeqConfigRoute
-  ApiIntakeqSettingsRoute: typeof ApiIntakeqSettingsRoute
-  ApiIntakeqTestRoute: typeof ApiIntakeqTestRoute
-  ApiNotesNoteIdRoute: typeof ApiNotesNoteIdRoute
-  ApiNotesExportRoute: typeof ApiNotesExportRoute
-  ApiPromptsIdRoute: typeof ApiPromptsIdRouteWithChildren
-  ApiRecordingsIdRoute: typeof ApiRecordingsIdRouteWithChildren
-  ApiSessionsHistoryRoute: typeof ApiSessionsHistoryRoute
-  ApiTemplatesIdRoute: typeof ApiTemplatesIdRoute
-  ApiAuditLogsIndexRoute: typeof ApiAuditLogsIndexRoute
-  ApiGapsIndexRoute: typeof ApiGapsIndexRoute
-  ApiNotesIndexRoute: typeof ApiNotesIndexRoute
-  ApiPromptsIndexRoute: typeof ApiPromptsIndexRoute
-  ApiRecordingsIndexRoute: typeof ApiRecordingsIndexRoute
-  ApiS3CredentialsIndexRoute: typeof ApiS3CredentialsIndexRoute
-  ApiSessionsIndexRoute: typeof ApiSessionsIndexRoute
-  ApiTemplatesIndexRoute: typeof ApiTemplatesIndexRoute
-  ApiIntakeqNoteTypesIdRoute: typeof ApiIntakeqNoteTypesIdRoute
-  ApiS3CredentialsDeleteIdRoute: typeof ApiS3CredentialsDeleteIdRoute
-  ApiS3CredentialsTestIdRoute: typeof ApiS3CredentialsTestIdRoute
-  ApiS3CredentialsUpdateIdRoute: typeof ApiS3CredentialsUpdateIdRoute
-  ApiSessionsIdSectionsRoute: typeof ApiSessionsIdSectionsRoute
-  ApiIntakeqNoteTypesIndexRoute: typeof ApiIntakeqNoteTypesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -549,282 +185,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsIntakeqRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/templates/': {
-      id: '/api/templates/'
-      path: '/api/templates'
-      fullPath: '/api/templates'
-      preLoaderRoute: typeof ApiTemplatesIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/sessions/': {
-      id: '/api/sessions/'
-      path: '/api/sessions'
-      fullPath: '/api/sessions'
-      preLoaderRoute: typeof ApiSessionsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/s3-credentials/': {
-      id: '/api/s3-credentials/'
-      path: '/api/s3-credentials'
-      fullPath: '/api/s3-credentials'
-      preLoaderRoute: typeof ApiS3CredentialsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/recordings/': {
-      id: '/api/recordings/'
-      path: '/api/recordings'
-      fullPath: '/api/recordings'
-      preLoaderRoute: typeof ApiRecordingsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/prompts/': {
-      id: '/api/prompts/'
-      path: '/api/prompts'
-      fullPath: '/api/prompts'
-      preLoaderRoute: typeof ApiPromptsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/notes/': {
-      id: '/api/notes/'
-      path: '/api/notes'
-      fullPath: '/api/notes'
-      preLoaderRoute: typeof ApiNotesIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/gaps/': {
-      id: '/api/gaps/'
-      path: '/api/gaps'
-      fullPath: '/api/gaps'
-      preLoaderRoute: typeof ApiGapsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/audit-logs/': {
-      id: '/api/audit-logs/'
-      path: '/api/audit-logs'
-      fullPath: '/api/audit-logs'
-      preLoaderRoute: typeof ApiAuditLogsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/templates/$id': {
-      id: '/api/templates/$id'
-      path: '/api/templates/$id'
-      fullPath: '/api/templates/$id'
-      preLoaderRoute: typeof ApiTemplatesIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/sessions/history': {
-      id: '/api/sessions/history'
-      path: '/api/sessions/history'
-      fullPath: '/api/sessions/history'
-      preLoaderRoute: typeof ApiSessionsHistoryRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/recordings/$id': {
-      id: '/api/recordings/$id'
-      path: '/api/recordings/$id'
-      fullPath: '/api/recordings/$id'
-      preLoaderRoute: typeof ApiRecordingsIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/prompts/$id': {
-      id: '/api/prompts/$id'
-      path: '/api/prompts/$id'
-      fullPath: '/api/prompts/$id'
-      preLoaderRoute: typeof ApiPromptsIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/notes/export': {
-      id: '/api/notes/export'
-      path: '/api/notes/export'
-      fullPath: '/api/notes/export'
-      preLoaderRoute: typeof ApiNotesExportRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/notes/$noteId': {
-      id: '/api/notes/$noteId'
-      path: '/api/notes/$noteId'
-      fullPath: '/api/notes/$noteId'
-      preLoaderRoute: typeof ApiNotesNoteIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/intakeq/test': {
-      id: '/api/intakeq/test'
-      path: '/api/intakeq/test'
-      fullPath: '/api/intakeq/test'
-      preLoaderRoute: typeof ApiIntakeqTestRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/intakeq/settings': {
-      id: '/api/intakeq/settings'
-      path: '/api/intakeq/settings'
-      fullPath: '/api/intakeq/settings'
-      preLoaderRoute: typeof ApiIntakeqSettingsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/intakeq/config': {
-      id: '/api/intakeq/config'
-      path: '/api/intakeq/config'
-      fullPath: '/api/intakeq/config'
-      preLoaderRoute: typeof ApiIntakeqConfigRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/intakeq/appointments': {
-      id: '/api/intakeq/appointments'
-      path: '/api/intakeq/appointments'
-      fullPath: '/api/intakeq/appointments'
-      preLoaderRoute: typeof ApiIntakeqAppointmentsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/gaps/batch': {
-      id: '/api/gaps/batch'
-      path: '/api/gaps/batch'
-      fullPath: '/api/gaps/batch'
-      preLoaderRoute: typeof ApiGapsBatchRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/gaps/$id': {
-      id: '/api/gaps/$id'
-      path: '/api/gaps/$id'
-      fullPath: '/api/gaps/$id'
-      preLoaderRoute: typeof ApiGapsIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/intakeq/note-types/': {
-      id: '/api/intakeq/note-types/'
-      path: '/api/intakeq/note-types'
-      fullPath: '/api/intakeq/note-types'
-      preLoaderRoute: typeof ApiIntakeqNoteTypesIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/sessions/$id/sections': {
-      id: '/api/sessions/$id/sections'
-      path: '/api/sessions/$id/sections'
-      fullPath: '/api/sessions/$id/sections'
-      preLoaderRoute: typeof ApiSessionsIdSectionsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/s3-credentials/update/$id': {
-      id: '/api/s3-credentials/update/$id'
-      path: '/api/s3-credentials/update/$id'
-      fullPath: '/api/s3-credentials/update/$id'
-      preLoaderRoute: typeof ApiS3CredentialsUpdateIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/s3-credentials/test/$id': {
-      id: '/api/s3-credentials/test/$id'
-      path: '/api/s3-credentials/test/$id'
-      fullPath: '/api/s3-credentials/test/$id'
-      preLoaderRoute: typeof ApiS3CredentialsTestIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/s3-credentials/delete/$id': {
-      id: '/api/s3-credentials/delete/$id'
-      path: '/api/s3-credentials/delete/$id'
-      fullPath: '/api/s3-credentials/delete/$id'
-      preLoaderRoute: typeof ApiS3CredentialsDeleteIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/recordings/$id/complete': {
-      id: '/api/recordings/$id/complete'
-      path: '/complete'
-      fullPath: '/api/recordings/$id/complete'
-      preLoaderRoute: typeof ApiRecordingsIdCompleteRouteImport
-      parentRoute: typeof ApiRecordingsIdRoute
-    }
-    '/api/recordings/$id/attach': {
-      id: '/api/recordings/$id/attach'
-      path: '/attach'
-      fullPath: '/api/recordings/$id/attach'
-      preLoaderRoute: typeof ApiRecordingsIdAttachRouteImport
-      parentRoute: typeof ApiRecordingsIdRoute
-    }
-    '/api/prompts/$id/duplicate': {
-      id: '/api/prompts/$id/duplicate'
-      path: '/duplicate'
-      fullPath: '/api/prompts/$id/duplicate'
-      preLoaderRoute: typeof ApiPromptsIdDuplicateRouteImport
-      parentRoute: typeof ApiPromptsIdRoute
-    }
-    '/api/intakeq/note-types/$id': {
-      id: '/api/intakeq/note-types/$id'
-      path: '/api/intakeq/note-types/$id'
-      fullPath: '/api/intakeq/note-types/$id'
-      preLoaderRoute: typeof ApiIntakeqNoteTypesIdRouteImport
+    '/settings/environment': {
+      id: '/settings/environment'
+      path: '/settings/environment'
+      fullPath: '/settings/environment'
+      preLoaderRoute: typeof SettingsEnvironmentRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
 }
-
-interface ApiPromptsIdRouteChildren {
-  ApiPromptsIdDuplicateRoute: typeof ApiPromptsIdDuplicateRoute
-}
-
-const ApiPromptsIdRouteChildren: ApiPromptsIdRouteChildren = {
-  ApiPromptsIdDuplicateRoute: ApiPromptsIdDuplicateRoute,
-}
-
-const ApiPromptsIdRouteWithChildren = ApiPromptsIdRoute._addFileChildren(
-  ApiPromptsIdRouteChildren,
-)
-
-interface ApiRecordingsIdRouteChildren {
-  ApiRecordingsIdAttachRoute: typeof ApiRecordingsIdAttachRoute
-  ApiRecordingsIdCompleteRoute: typeof ApiRecordingsIdCompleteRoute
-}
-
-const ApiRecordingsIdRouteChildren: ApiRecordingsIdRouteChildren = {
-  ApiRecordingsIdAttachRoute: ApiRecordingsIdAttachRoute,
-  ApiRecordingsIdCompleteRoute: ApiRecordingsIdCompleteRoute,
-}
-
-const ApiRecordingsIdRouteWithChildren = ApiRecordingsIdRoute._addFileChildren(
-  ApiRecordingsIdRouteChildren,
-)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   HistoryRoute: HistoryRoute,
   TemplatesRoute: TemplatesRoute,
+  SettingsEnvironmentRoute: SettingsEnvironmentRoute,
   SettingsIntakeqRoute: SettingsIntakeqRoute,
   SettingsIntakeqTypesRoute: SettingsIntakeqTypesRoute,
   SettingsPromptsRoute: SettingsPromptsRoute,
   SettingsS3Route: SettingsS3Route,
-  ApiGapsIdRoute: ApiGapsIdRoute,
-  ApiGapsBatchRoute: ApiGapsBatchRoute,
-  ApiIntakeqAppointmentsRoute: ApiIntakeqAppointmentsRoute,
-  ApiIntakeqConfigRoute: ApiIntakeqConfigRoute,
-  ApiIntakeqSettingsRoute: ApiIntakeqSettingsRoute,
-  ApiIntakeqTestRoute: ApiIntakeqTestRoute,
-  ApiNotesNoteIdRoute: ApiNotesNoteIdRoute,
-  ApiNotesExportRoute: ApiNotesExportRoute,
-  ApiPromptsIdRoute: ApiPromptsIdRouteWithChildren,
-  ApiRecordingsIdRoute: ApiRecordingsIdRouteWithChildren,
-  ApiSessionsHistoryRoute: ApiSessionsHistoryRoute,
-  ApiTemplatesIdRoute: ApiTemplatesIdRoute,
-  ApiAuditLogsIndexRoute: ApiAuditLogsIndexRoute,
-  ApiGapsIndexRoute: ApiGapsIndexRoute,
-  ApiNotesIndexRoute: ApiNotesIndexRoute,
-  ApiPromptsIndexRoute: ApiPromptsIndexRoute,
-  ApiRecordingsIndexRoute: ApiRecordingsIndexRoute,
-  ApiS3CredentialsIndexRoute: ApiS3CredentialsIndexRoute,
-  ApiSessionsIndexRoute: ApiSessionsIndexRoute,
-  ApiTemplatesIndexRoute: ApiTemplatesIndexRoute,
-  ApiIntakeqNoteTypesIdRoute: ApiIntakeqNoteTypesIdRoute,
-  ApiS3CredentialsDeleteIdRoute: ApiS3CredentialsDeleteIdRoute,
-  ApiS3CredentialsTestIdRoute: ApiS3CredentialsTestIdRoute,
-  ApiS3CredentialsUpdateIdRoute: ApiS3CredentialsUpdateIdRoute,
-  ApiSessionsIdSectionsRoute: ApiSessionsIdSectionsRoute,
-  ApiIntakeqNoteTypesIndexRoute: ApiIntakeqNoteTypesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}

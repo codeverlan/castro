@@ -93,7 +93,7 @@ export function Sidebar({ className, collapsed = false, onCollapsedChange }: Sid
       <div className="border-t p-2">
         <NavItem
           item={{
-            path: ROUTES.SETTINGS.S3,
+            path: ROUTES.SETTINGS.ENVIRONMENT,
             name: 'Settings',
             icon: 'settings',
             showInNav: true,
@@ -214,7 +214,7 @@ export function MobileSidebar({ isOpen, onClose }: MobileSidebarProps) {
         <div className="border-t p-2">
           <NavItem
             item={{
-              path: ROUTES.SETTINGS.S3,
+              path: ROUTES.SETTINGS.ENVIRONMENT,
               name: 'Settings',
               icon: 'settings',
               showInNav: true,

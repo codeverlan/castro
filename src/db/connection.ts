@@ -14,6 +14,8 @@ const connectionConfig = {
   max: parseInt(process.env.DATABASE_POOL_MAX || '10'),
   idleTimeoutMillis: parseInt(process.env.DATABASE_IDLE_TIMEOUT || '30000'),
   connectionTimeoutMillis: parseInt(process.env.DATABASE_CONNECTION_TIMEOUT || '2000'),
+  // SSL configuration
+  ssl: process.env.DATABASE_SSL === 'true' ? { rejectUnauthorized: false } : false,
 };
 
 // Create PostgreSQL connection pool

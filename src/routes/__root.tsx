@@ -1,10 +1,6 @@
-/// <reference types="vite/client" />
-import type { ReactNode } from 'react'
 import {
   Outlet,
   createRootRoute,
-  HeadContent,
-  Scripts,
   Link,
 } from '@tanstack/react-router'
 import { ThemeProvider } from '~/components/theme-provider'
@@ -15,56 +11,42 @@ import {
   MainLayout,
   SkipLinks,
 } from '~/navigation'
-import '~/globals.css'
+import { EmbeddingProvider, isEmbeddedMode } from '~/lib/embedding-context'
 
 export const Route = createRootRoute({
-  head: () => ({
-    meta: [
-      {
-        charSet: 'utf-8',
-      },
-      {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1',
-      },
-      {
-        title: 'Castro',
-      },
-    ],
-  }),
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
 })
 
 function RootComponent() {
+  // Check if running in embedded mode (inside LMHG-Workspace)
+  const isEmbedded = isEmbeddedMode()
+
   return (
-    <RootDocument>
+    <EmbeddingProvider>
       <ThemeProvider defaultTheme="system" storageKey="castro-ui-theme">
         <AuthProvider>
           <NavigationProvider>
-            <SkipLinks />
-            <MainLayout>
-              <Outlet />
-            </MainLayout>
-            <Toaster position="bottom-right" />
+            {isEmbedded ? (
+              // Embedded mode: No MainLayout, just content
+              <>
+                <Outlet />
+                <Toaster position="bottom-right" />
+              </>
+            ) : (
+              // Standalone mode: Full navigation layout
+              <>
+                <SkipLinks />
+                <MainLayout>
+                  <Outlet />
+                </MainLayout>
+                <Toaster position="bottom-right" />
+              </>
+            )}
           </NavigationProvider>
         </AuthProvider>
       </ThemeProvider>
-    </RootDocument>
-  )
-}
-
-function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <HeadContent />
-      </head>
-      <body className="min-h-screen bg-background font-sans antialiased">
-        {children}
-        <Scripts />
-      </body>
-    </html>
+    </EmbeddingProvider>
   )
 }
 
